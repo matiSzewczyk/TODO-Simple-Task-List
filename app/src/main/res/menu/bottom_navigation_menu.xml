@@ -1,0 +1,12 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/tasks"
+        android:enabled="true"
+        android:icon="@drawable/task_icon"
+        android:title="@string/bottom_menu_tasks"/>
+    <item
+        android:id="@+id/completed"
+        android:enabled="true"
+        android:icon="@drawable/completed_icon"
+        android:title="@string/bottom_menu_completed"/>
+</menu>
