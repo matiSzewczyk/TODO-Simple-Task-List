@@ -13,7 +13,11 @@ class MainActivity : AppCompatActivity() {
 
         val taskFragment = TaskFragment()
         val completedFragment = CompletedFragment()
-        setCurrentFragment(taskFragment)
+        // Not using the function to avoid adding the very first instance to the backStack
+        supportFragmentManager.beginTransaction().apply {
+            replace(R.id.flFragment, taskFragment)
+            commit()
+        }
 
         // set the on menu item click
         val bottomNavigation = findViewById<BottomNavigationView>(R.id.bottomNavigation)
@@ -31,11 +35,11 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
     private fun setCurrentFragment(fragment: Fragment) =
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.flFragment, fragment)
             addToBackStack(null)
             commit()
         }
-
 }
