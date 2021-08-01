@@ -36,7 +36,7 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
                 val taskTitle = taskInput.text.toString()
                 val task = Todo(taskTitle, false)
                 todoAdapter.addTask(task)
-
+                taskInput.text.clear()
                 taskInput.clearFocus()
                 addTask.visibility = View.VISIBLE
                 taskInput.visibility = View.INVISIBLE

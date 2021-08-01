@@ -33,5 +33,4 @@ class TodoAdapter(
         todoList.add(todo)
         notifyItemInserted(todoList.size-1)
     }
-
 }
