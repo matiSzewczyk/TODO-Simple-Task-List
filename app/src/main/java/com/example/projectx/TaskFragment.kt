@@ -11,7 +11,6 @@ import kotlinx.android.synthetic.main.fragment_task.*
 import kotlinx.android.synthetic.main.todo_item.*
 
 class TaskFragment : Fragment(R.layout.fragment_task) {
-//    private lateinit var todoAdapter: TodoAdapter
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -38,13 +37,13 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
         taskInput.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 val taskTitle = taskInput.text.toString()
-                if (!taskTitle.isEmpty()) {
+                if (taskTitle.isNotEmpty()) {
                     val task = Task(taskTitle, false)
                     todoAdapter.addTask(task, database)
                     taskInput.text.clear()
+                    taskInput.clearFocus()
                     addTask.visibility = View.VISIBLE
                     taskInput.visibility = View.INVISIBLE
-                    taskInput.clearFocus()
                     // Force the soft keyboard to hide
                     val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                     imm.hideSoftInputFromWindow(view.windowToken, 0)

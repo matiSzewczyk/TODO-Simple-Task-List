@@ -4,13 +4,12 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.todo_item.view.*
 
 
 class TodoAdapter(
-    val context: Context,
+    val context: Context, // Get the context of the app for the db
     var todoList: MutableList<Task>
 ) : RecyclerView.Adapter<TodoAdapter.TodoViewHolder>() {
 
@@ -29,7 +28,7 @@ class TodoAdapter(
         val database = AppDatabase.getDatabase(context)
         val completedAdapter = CompletedAdapter(mutableListOf())
         completedAdapter.completedList = database.completedDao().getAll()
-        holder.itemView.apply {
+        holder.itemView.apply {// This let's me directly call taskTitle instead of writing holder.itemView.taskTitle
             taskTitle.text = todoList[position].task
             taskCheckBox.isChecked = todoList[position].checked
             taskCheckBox.setOnCheckedChangeListener { _, isChecked ->
@@ -47,16 +46,6 @@ class TodoAdapter(
     fun addTask(task: Task, db: AppDatabase) {
         todoList.add(task)
         db.taskDao().insertTask(task)
-        notifyItemInserted(todoList.size-1)
+        notifyItemInserted(todoList.size - 1)
     }
 }
-//                for (task in todoList) {
-//                    val checked: Boolean = database.taskDao().getChecked(task.task)
-//                    println(checked)
-//                    if (checked) {
-//                        val done = Completed(task.task)
-//                        completedAdapter.addTask(done, database)
-//                        println("shoudl be working")
-//                        database.taskDao().deleteTask(task.task)
-//                    }
-//                }
