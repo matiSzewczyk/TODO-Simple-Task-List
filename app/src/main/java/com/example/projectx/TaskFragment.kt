@@ -2,7 +2,6 @@ package com.example.projectx
 
 import android.content.Context
 import android.os.Bundle
-import android.view.KeyEvent
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
@@ -14,6 +13,10 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
     private lateinit var todoAdapter: TodoAdapter
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // db stuff
+//        val database = AppDatabase.getDatabase(requireContext().applicationContext)
+//        todoAdapter.todoList = database.taskDao().getAll()
 
         todoAdapter = TodoAdapter(mutableListOf())
 

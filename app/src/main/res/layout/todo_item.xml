@@ -4,14 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:padding="16dp"
     android:layout_width="match_parent"
-    android:layout_height="100dp">
+    android:layout_height="80dp">
 
     <TextView
         android:id="@+id/taskTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Title"
-        android:textSize="24sp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/taskCheckBox"
