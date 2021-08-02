@@ -45,6 +45,9 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
                     addTask.visibility = View.VISIBLE
                     taskInput.visibility = View.INVISIBLE
                     taskInput.clearFocus()
+                    // Force the soft keyboard to hide
+                    val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(view.windowToken, 0)
                     return@setOnEditorActionListener true
                 }
             }
