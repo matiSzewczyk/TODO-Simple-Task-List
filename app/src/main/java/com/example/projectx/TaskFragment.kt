@@ -42,9 +42,9 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
                     val task = Task(taskTitle, false)
                     todoAdapter.addTask(task, database)
                     taskInput.text.clear()
-                    taskInput.clearFocus()
                     addTask.visibility = View.VISIBLE
                     taskInput.visibility = View.INVISIBLE
+                    taskInput.clearFocus()
                     return@setOnEditorActionListener true
                 }
             }
