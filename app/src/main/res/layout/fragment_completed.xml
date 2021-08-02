@@ -5,9 +5,9 @@
     android:layout_height="match_parent"
     tools:context=".TaskFragment">
 
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/completedList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Completed fragment" />
+        android:layout_height="match_parent" />
 
 </FrameLayout>

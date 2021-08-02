@@ -13,8 +13,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/taskList"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/taskInput"
+            android:layout_height="match_parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -23,7 +22,6 @@
             android:id="@+id/addTask"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:layout_marginBottom="16dp"
             android:background="@drawable/round_button"
             android:text="+"
             android:textSize="20sp"
@@ -36,15 +34,16 @@
             android:id="@+id/taskInput"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="64dp"
-            android:hint="Your next task :)"
+            android:layout_marginBottom="36dp"
             android:height="48dp"
+            android:hint="Your next task :)"
             android:imeOptions="actionDone"
             android:inputType="text"
             app:layout_constraintBottom_toTopOf="@+id/addTask"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="TouchTargetSizeCheck" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

@@ -14,4 +14,7 @@ interface TaskDao {
 
     @Query("DELETE FROM tasks WHERE task = :task")
     fun deleteTask(task: String)
+
+    @Query("SELECT checked FROM tasks WHERE task = :task")
+    fun getChecked(task: String) : Boolean
 }

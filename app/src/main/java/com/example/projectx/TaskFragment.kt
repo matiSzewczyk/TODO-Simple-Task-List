@@ -8,13 +8,14 @@ import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_task.*
+import kotlinx.android.synthetic.main.todo_item.*
 
 class TaskFragment : Fragment(R.layout.fragment_task) {
 //    private lateinit var todoAdapter: TodoAdapter
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val todoAdapter = TodoAdapter(mutableListOf())
+        val todoAdapter = TodoAdapter(requireContext(), mutableListOf())
         // db stuff
         val database = AppDatabase.getDatabase(requireContext().applicationContext)
         todoAdapter.todoList = database.taskDao().getAll()
@@ -38,7 +39,7 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 val taskTitle = taskInput.text.toString()
                 if (!taskTitle.isEmpty()) {
-                    val task = Task(taskTitle)
+                    val task = Task(taskTitle, false)
                     todoAdapter.addTask(task, database)
                     taskInput.text.clear()
                     taskInput.clearFocus()
