@@ -38,6 +38,7 @@ class TodoAdapter(
                     database.completedDao().addCompleted(done)
                     database.taskDao().deleteTask(taskTitle.text.toString())
                 }
+                todoList.removeAt(position)
                 notifyItemRemoved(position)
             }
         }
