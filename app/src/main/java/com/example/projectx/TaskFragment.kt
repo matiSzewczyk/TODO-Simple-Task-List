@@ -10,15 +10,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_task.*
 
 class TaskFragment : Fragment(R.layout.fragment_task) {
-    private lateinit var todoAdapter: TodoAdapter
+//    private lateinit var todoAdapter: TodoAdapter
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val todoAdapter = TodoAdapter(mutableListOf())
         // db stuff
-//        val database = AppDatabase.getDatabase(requireContext().applicationContext)
-//        todoAdapter.todoList = database.taskDao().getAll()
+        val database = AppDatabase.getDatabase(requireContext().applicationContext)
+        todoAdapter.todoList = database.taskDao().getAll()
 
-        todoAdapter = TodoAdapter(mutableListOf())
 
         taskInput.visibility = View.INVISIBLE
 
@@ -37,13 +37,15 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
         taskInput.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 val taskTitle = taskInput.text.toString()
-                val task = Todo(taskTitle, false)
-                todoAdapter.addTask(task)
-                taskInput.text.clear()
-                taskInput.clearFocus()
-                addTask.visibility = View.VISIBLE
-                taskInput.visibility = View.INVISIBLE
-                return@setOnEditorActionListener true
+                if (!taskTitle.isEmpty()) {
+                    val task = Task(taskTitle)
+                    todoAdapter.addTask(task, database)
+                    taskInput.text.clear()
+                    taskInput.clearFocus()
+                    addTask.visibility = View.VISIBLE
+                    taskInput.visibility = View.INVISIBLE
+                    return@setOnEditorActionListener true
+                }
             }
             false
         }

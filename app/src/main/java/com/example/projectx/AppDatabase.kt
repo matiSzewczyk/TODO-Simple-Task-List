@@ -6,9 +6,9 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 @Database(entities = arrayOf(Task::class), version = 1, exportSchema = false)
-public abstract class AppDatabase : RoomDatabase() {
+abstract class AppDatabase : RoomDatabase() {
 
-    private val DB_NAME: String = "taskDb"
+//    private val DB_NAME: String = "taskDb"
     abstract fun taskDao(): TaskDao
 
     companion object {
@@ -25,7 +25,7 @@ public abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "word_database"
-                ).build()
+                ).allowMainThreadQueries().build()
                 INSTANCE = instance
                 // return instance
                 instance

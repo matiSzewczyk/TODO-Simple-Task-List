@@ -1,8 +1,10 @@
 package com.example.projectx
 
+import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 
+@Dao
 interface TaskDao {
     @Insert
     fun insertTask(task: Task)
@@ -11,5 +13,5 @@ interface TaskDao {
     fun getAll(): MutableList<Task>
 
     @Query("DELETE FROM tasks WHERE task = :task")
-    fun deleteTask(task: Task)
+    fun deleteTask(task: String)
 }
