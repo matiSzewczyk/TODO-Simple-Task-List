@@ -73,7 +73,6 @@
             android:drawableTint="@color/peach_darker"
             android:gravity="center"
             android:textColor="@color/peach_darker"
-            android:textSize="8sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>

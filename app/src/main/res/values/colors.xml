@@ -8,9 +8,10 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="myTeal">#16B1BF</color>
-    <color name="peach_darker">#ffb58c</color>
-    <color name="peach_lighter">#ffc7a3</color>
+    <color name="peach_darker">#ffcbad</color>
+    <color name="peach_lighter">#ffd0b5</color>
     <color name="et_color_lighter">#ffffff</color>
     <color name="et_color_darker">#ffefeb</color>
     <color name="hint_color">#ffbba6</color>
+    <color name="description_font">#dbdbdb</color>
 </resources>
