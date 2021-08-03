@@ -14,4 +14,7 @@ interface CompletedDao {
 
     @Query("DELETE FROM completed WHERE task = :task")
     fun deleteTask(task: String)
+
+    @Query("DELETE FROM completed")
+    fun deleteAllTasks()
 }

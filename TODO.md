@@ -8,3 +8,6 @@
 	- One way to implement a description to the task is adding an invisible at first
 	edittext to the task_item and a visible desciption, onclick() i would swap them
 	and input the new description.<br />
+[X] Add a background to the taskInput in order to make it more visible. This will also
+help in adding descriptions.<br />
+[ ] Make sure the *Delete Completed* button refreshes the Completed Fragment.<br />

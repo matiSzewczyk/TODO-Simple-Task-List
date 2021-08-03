@@ -10,4 +10,7 @@
     <color name="myTeal">#16B1BF</color>
     <color name="peach_darker">#ffb58c</color>
     <color name="peach_lighter">#ffc7a3</color>
+    <color name="et_color_lighter">#ffffff</color>
+    <color name="et_color_darker">#ffefeb</color>
+    <color name="hint_color">#ffbba6</color>
 </resources>

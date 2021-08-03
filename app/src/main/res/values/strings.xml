@@ -4,4 +4,6 @@
     <string name="bottom_menu_completed">Completed</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="settings">Delete completed</string>
+    <string name="taskHint">What\'s next? ;)</string>
 </resources>

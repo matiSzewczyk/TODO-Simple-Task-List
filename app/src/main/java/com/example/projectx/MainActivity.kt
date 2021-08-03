@@ -1,10 +1,11 @@
 package com.example.projectx
 
-import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.google.android.material.bottomnavigation.BottomNavigationMenuView
+import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
@@ -49,4 +50,24 @@ class MainActivity : AppCompatActivity() {
             addToBackStack(null)
             commit()
         }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.options_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val database = AppDatabase.getDatabase(applicationContext)
+        val completedAdapter = CompletedAdapter(mutableListOf())
+        return when (item.itemId) {
+            R.id.settings -> {
+                completedAdapter.completedList.clear()
+                completedAdapter.notifyDataSetChanged()
+                database.completedDao().deleteAllTasks()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
 }
