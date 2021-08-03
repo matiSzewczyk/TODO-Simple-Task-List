@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.todo_item.view.*
 
@@ -24,18 +25,23 @@ class TodoAdapter(
         return todoList.size
     }
 
+    private val database = AppDatabase.getDatabase(context)
+    private val completedAdapter = CompletedAdapter(mutableListOf())
+
+    private fun addToCompleted(taskTitle: TextView) {
+        val done = Completed(taskTitle.text.toString())
+        database.completedDao().addCompleted(done)
+        database.taskDao().deleteTask(taskTitle.text.toString())
+    }
+
     override fun onBindViewHolder(holder: TodoViewHolder, position: Int) {
-        val database = AppDatabase.getDatabase(context)
-        val completedAdapter = CompletedAdapter(mutableListOf())
         completedAdapter.completedList = database.completedDao().getAll()
         holder.itemView.apply {// This let's me directly call taskTitle instead of writing holder.itemView.taskTitle
             taskTitle.text = todoList[position].task
             taskCheckBox.isChecked = todoList[position].checked
             taskCheckBox.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
-                    val done = Completed(taskTitle.text.toString())
-                    database.completedDao().addCompleted(done)
-                    database.taskDao().deleteTask(taskTitle.text.toString())
+                    addToCompleted(taskTitle)
                 }
                 todoList.removeAt(position)
                 notifyItemRemoved(position)
