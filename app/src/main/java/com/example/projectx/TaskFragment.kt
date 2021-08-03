@@ -14,24 +14,23 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val todoAdapter = TodoAdapter(requireContext(), mutableListOf())
-        // db stuff
+        // Input method manager
+        val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        // Init Database
         val database = AppDatabase.getDatabase(requireContext().applicationContext)
+
+        val todoAdapter = TodoAdapter(requireContext(), mutableListOf())
         todoAdapter.todoList = database.taskDao().getAll()
-
-
-        taskInput.visibility = View.INVISIBLE
 
         taskList.adapter = todoAdapter
         taskList.layoutManager = LinearLayoutManager(parentFragment?.context)
+
+        taskInput.visibility = View.INVISIBLE
 
         addTask.setOnClickListener {
             addTask.visibility = View.INVISIBLE
             taskInput.visibility = View.VISIBLE
             taskInput.requestFocus()
-            taskInput.showSoftInputOnFocus
-
-            val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.showSoftInput(taskInput, InputMethodManager.SHOW_IMPLICIT)
         }
         taskInput.setOnEditorActionListener { _, actionId, _ ->
@@ -45,7 +44,6 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
                     addTask.visibility = View.VISIBLE
                     taskInput.visibility = View.INVISIBLE
                     // Force the soft keyboard to hide
-                    val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                     imm.hideSoftInputFromWindow(view.windowToken, 0)
                     return@setOnEditorActionListener true
                 }
