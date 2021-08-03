@@ -25,7 +25,7 @@
             android:layout_height="60dp"
             android:background="@drawable/round_button"
             app:backgroundTint="@color/peach_darker"
-            android:text="+"
+            android:text="@string/add_button_plus"
             android:textSize="20sp"
             android:gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -46,7 +46,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            tools:ignore="TouchTargetSizeCheck" />
+            tools:ignore="TouchTargetSizeCheck"
+            android:autofillHints="" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

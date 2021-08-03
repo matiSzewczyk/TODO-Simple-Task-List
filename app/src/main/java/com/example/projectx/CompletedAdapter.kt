@@ -3,7 +3,6 @@ package com.example.projectx
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.todo_item.view.*
 
@@ -15,7 +14,7 @@ class CompletedAdapter(
     inner class CompletedViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CompletedViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.todo_item, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.completed_item, parent, false)
         return CompletedViewHolder(view)
     }
 
@@ -26,12 +25,6 @@ class CompletedAdapter(
     override fun onBindViewHolder(holder: CompletedViewHolder, position: Int) {
         holder.itemView.apply {
             taskTitle.text = completedList[position].task
-            taskCheckBox.isChecked = completedList[position].equals(true)
         }
-    }
-
-    fun addTask(completed: Completed, db: AppDatabase) {
-        completedList.add(completed)
-        notifyItemInserted(completedList.size-1)
     }
 }
