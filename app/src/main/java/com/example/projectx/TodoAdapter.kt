@@ -1,11 +1,13 @@
 package com.example.projectx
 
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.fragment_task.view.*
 import kotlinx.android.synthetic.main.todo_item.view.*
 
 
@@ -45,6 +47,9 @@ class TodoAdapter(
                 }
                 todoList.removeAt(position)
                 notifyItemRemoved(position)
+            }
+            taskTitle?.setOnClickListener {
+                taskDescription.text = todoList[position].description
             }
         }
     }

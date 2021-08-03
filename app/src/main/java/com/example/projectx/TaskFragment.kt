@@ -37,8 +37,10 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
             taskInput.requestFocus()
             imm.showSoftInput(taskInput, InputMethodManager.SHOW_IMPLICIT)
         }
+
         addDescription.setOnClickListener {
             if (taskInput.text.isNotEmpty()) {
+                addDescription.visibility = View.INVISIBLE
                 taskInput.visibility = View.INVISIBLE
                 descriptionInput.visibility = View.VISIBLE
                 descriptionInput.requestFocus()
@@ -47,6 +49,7 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
                 Toast.makeText(context, "Please add a task first :)", Toast.LENGTH_SHORT).show()
             }
         }
+
         descriptionInput.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 val taskTitle = taskInput.text.toString()
@@ -58,13 +61,14 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
                 descriptionInput.text.clear()
                 descriptionInput.clearFocus()
                 addTask.visibility = View.VISIBLE
-                descriptionInput.visibility = View.VISIBLE
+                descriptionInput.visibility = View.INVISIBLE
                 taskInput.visibility = View.INVISIBLE
                 imm.hideSoftInputFromWindow(view.windowToken, 0)
                 return@setOnEditorActionListener true
             }
             false
         }
+
         taskInput.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 val taskTitle = taskInput.text.toString()

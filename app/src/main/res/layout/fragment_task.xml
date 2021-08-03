@@ -68,14 +68,14 @@
             android:id="@+id/addDescription"
             android:layout_width="100dp"
             android:layout_height="60dp"
-            android:textSize="8sp"
-            android:gravity="center"
-            android:textColor="@color/peach_darker"
             android:background="@android:color/transparent"
             android:drawableLeft="@drawable/description_icon"
             android:drawableTint="@color/peach_darker"
+            android:gravity="center"
+            android:textColor="@color/peach_darker"
+            android:textSize="8sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/taskInput" />
+            app:layout_constraintEnd_toEndOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

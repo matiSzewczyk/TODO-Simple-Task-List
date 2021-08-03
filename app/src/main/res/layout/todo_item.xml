@@ -8,20 +8,32 @@
 
     <TextView
         android:id="@+id/taskTitle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="190dp"
+        android:layout_height="match_parent"
         android:textSize="20sp"
+        android:gravity="center_vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/taskCheckBox"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/taskDescription"
+        android:layout_width="130dp"
+        android:layout_height="match_parent"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/taskTitle"
         app:layout_constraintTop_toTopOf="parent" />
 
     <CheckBox
         android:id="@+id/taskCheckBox"
-        android:theme="@style/CheckBoxTheme"
-        android:textColorHighlight="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:textColorHighlight="@color/black"
+        android:theme="@style/CheckBoxTheme"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
