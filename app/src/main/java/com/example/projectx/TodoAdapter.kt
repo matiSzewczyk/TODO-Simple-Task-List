@@ -27,16 +27,15 @@ class TodoAdapter(
     }
 
     private val database = AppDatabase.getDatabase(context)
-    private val completedAdapter = CompletedAdapter(mutableListOf())
+    private val completedAdapter = CompletedAdapter(context, mutableListOf())
 
     private fun addToCompleted(taskTitle: TextView) {
-        val done = Completed(taskTitle.text.toString())
+        val done = Completed(taskTitle.text.toString(), null, true)
         database.completedDao().addCompleted(done)
         database.taskDao().deleteTask(taskTitle.text.toString())
     }
 
     override fun onBindViewHolder(holder: TodoViewHolder, position: Int) {
-        completedAdapter.completedList = database.completedDao().getAll()
         holder.itemView.apply {// This let's me directly call taskTitle instead of writing holder.itemView.taskTitle
             taskTitle.text = todoList[position].task
             taskCheckBox.isChecked = todoList[position].checked

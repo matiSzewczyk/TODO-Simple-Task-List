@@ -17,4 +17,10 @@ interface CompletedDao {
 
     @Query("DELETE FROM completed")
     fun deleteAllTasks()
+
+    @Query("DELETE FROM completed WHERE checked = 1")
+    fun deleteSelected()
+
+    @Query("UPDATE completed SET checked = :isChecked WHERE task = :task")
+    fun changeChecked(task: String, isChecked: Boolean)
 }

@@ -6,7 +6,9 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "completed")
 data class Completed(
-    @ColumnInfo(name = "task") val task: String
+    @ColumnInfo(name = "task") val task: String,
+    @ColumnInfo(name = "description") val description: String?,
+    @ColumnInfo(name = "checked") var checked: Boolean = false
 ) {
 
     @PrimaryKey(autoGenerate = true)

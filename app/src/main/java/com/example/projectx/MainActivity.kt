@@ -58,12 +58,18 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val database = AppDatabase.getDatabase(applicationContext)
-        val completedAdapter = CompletedAdapter(mutableListOf())
+        val completedAdapter = CompletedAdapter(applicationContext, mutableListOf())
         return when (item.itemId) {
-            R.id.settings -> {
-                completedAdapter.completedList.clear()
-                completedAdapter.notifyDataSetChanged()
+            R.id.settings_all -> {
                 database.completedDao().deleteAllTasks()
+                completedAdapter.completedList = database.completedDao().getAll()
+                completedAdapter.notifyDataSetChanged()
+                true
+            }
+            R.id.settings_selected -> {
+                database.completedDao().deleteSelected()
+                completedAdapter.completedList = database.completedDao().getAll()
+                completedAdapter.notifyDataSetChanged()
                 true
             }
             else -> super.onOptionsItemSelected(item)
