@@ -8,12 +8,12 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
+    val taskFragment = TaskFragment()
+    val completedFragment = CompletedFragment()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val taskFragment = TaskFragment()
-        val completedFragment = CompletedFragment()
         // Not using the function to avoid adding the very first instance to the backStack
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.flFragment, taskFragment)
@@ -61,15 +61,11 @@ class MainActivity : AppCompatActivity() {
         val completedAdapter = CompletedAdapter(applicationContext, mutableListOf())
         return when (item.itemId) {
             R.id.settings_all -> {
-                database.completedDao().deleteAllTasks()
-                completedAdapter.completedList = database.completedDao().getAll()
-                completedAdapter.notifyDataSetChanged()
+                completedAdapter.deleteAll()
                 true
             }
             R.id.settings_selected -> {
                 database.completedDao().deleteSelected()
-                completedAdapter.completedList = database.completedDao().getAll()
-                completedAdapter.notifyDataSetChanged()
                 true
             }
             else -> super.onOptionsItemSelected(item)

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -86,6 +87,16 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
                 }
             }
             false
+        }
+        taskCheckBox?.setOnCheckedChangeListener { _, isChecked ->
+            val position: Int = taskCheckBox.id
+            if (isChecked) {
+                val done = Completed(taskTitle.text.toString(), null, true)
+                database.completedDao().addCompleted(done)
+                database.taskDao().deleteTask(taskTitle.text.toString())
+            }
+            todoAdapter.todoList.removeAt(position)
+            todoAdapter.notifyItemRemoved(position)
         }
     }
 }

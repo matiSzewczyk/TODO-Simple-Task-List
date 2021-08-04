@@ -24,27 +24,37 @@ class CompletedAdapter(
         return completedList.size
     }
 
+    private val database = AppDatabase.getDatabase(context)
     override fun onBindViewHolder(holder: CompletedViewHolder, position: Int) {
-         val database = AppDatabase.getDatabase(context)
         holder.itemView.apply {
             taskTitle.text = completedList[position].task
             taskCheckBox.isChecked = completedList[position].checked
             val checked: Boolean = completedList[position].checked
-            taskCheckBox.setOnCheckedChangeListener { _, isChecked ->
-                println("${completedList[position].checked}")
-                if (checked == true) {
+            taskCheckBox.setOnCheckedChangeListener { _, _ ->
+                if (checked) {
                     database.completedDao()
-                        .changeChecked(completedList[position].task.toString(), false)
+                        .changeChecked(completedList[position].task, false)
                 } else {
                     database.completedDao()
-                        .changeChecked(completedList[position].task.toString(), true)
+                        .changeChecked(completedList[position].task, true)
                 }
 
             }
         }
     }
 
-    private fun deleteChecked() {
+//    fun addTask(task: Completed, db: AppDatabase) {
+//        completedList.add(task)
+//        db.completedDao().addCompleted(task)
+//        notifyItemInserted(completedList.size - 1)
+//    }
 
+    fun deleteAll() {
+        println(completedList.size)
+        database.completedDao().deleteAllTasks()
+        completedList.clear()
+        println(completedList.size)
+        completedList = database.completedDao().getAll()
+        notifyDataSetChanged()
     }
 }
