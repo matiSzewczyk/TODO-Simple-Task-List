@@ -44,6 +44,7 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
             showTaskInput.visibility = View.INVISIBLE
             taskInput.visibility = View.VISIBLE
         }
+
         showDescriptionInput.setOnClickListener {
             if (taskInput.text.isNotEmpty()) {
                 showDescriptionInput.visibility = View.INVISIBLE
@@ -92,16 +93,6 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
                 }
             }
             false
-        }
-        taskCheckBox?.setOnCheckedChangeListener { _, isChecked ->
-            val position: Int = taskCheckBox.id
-            if (isChecked) {
-                val done = Completed(taskTitle.text.toString(), null, true)
-                database.completedDao().addCompleted(done)
-                database.taskDao().deleteTask(taskTitle.text.toString())
-            }
-            todoAdapter.todoList.removeAt(position)
-            todoAdapter.notifyItemRemoved(position)
         }
     }
 }
