@@ -43,12 +43,6 @@ class CompletedAdapter(
         }
     }
 
-//    fun addTask(task: Completed, db: AppDatabase) {
-//        completedList.add(task)
-//        db.completedDao().addCompleted(task)
-//        notifyItemInserted(completedList.size - 1)
-//    }
-
     fun deleteAll() {
         println(completedList.size)
         database.completedDao().deleteAllTasks()

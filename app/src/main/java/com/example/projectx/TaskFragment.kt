@@ -27,20 +27,27 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
         taskList.layoutManager = LinearLayoutManager(parentFragment?.context)
 
         taskInput.visibility = View.INVISIBLE
-        addDescription.visibility = View.INVISIBLE
+        showDescriptionInput.visibility = View.INVISIBLE
+        showTaskInput.visibility = View.INVISIBLE
         descriptionInput.visibility = View.INVISIBLE
 
         addTask.setOnClickListener {
             addTask.visibility = View.INVISIBLE
             taskInput.visibility = View.VISIBLE
-            addDescription.visibility = View.VISIBLE
+            showDescriptionInput.visibility = View.VISIBLE
             taskInput.requestFocus()
             imm.showSoftInput(taskInput, InputMethodManager.SHOW_IMPLICIT)
         }
 
-        addDescription.setOnClickListener {
+        showTaskInput.setOnClickListener {
+            descriptionInput.visibility = View.INVISIBLE
+            showTaskInput.visibility = View.INVISIBLE
+            taskInput.visibility = View.VISIBLE
+        }
+        showDescriptionInput.setOnClickListener {
             if (taskInput.text.isNotEmpty()) {
-                addDescription.visibility = View.INVISIBLE
+                showDescriptionInput.visibility = View.INVISIBLE
+                showTaskInput.visibility = View.VISIBLE
                 taskInput.visibility = View.INVISIBLE
                 descriptionInput.visibility = View.VISIBLE
                 descriptionInput.requestFocus()

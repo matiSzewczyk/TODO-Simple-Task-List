@@ -48,6 +48,7 @@
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             tools:ignore="TouchTargetSizeCheck"/>
+
         <EditText
             android:id="@+id/descriptionInput"
             android:layout_width="wrap_content"
@@ -65,7 +66,7 @@
             tools:ignore="TouchTargetSizeCheck"/>
 
         <Button
-            android:id="@+id/addDescription"
+            android:id="@+id/showDescriptionInput"
             android:layout_width="100dp"
             android:layout_height="60dp"
             android:background="@android:color/transparent"
@@ -75,6 +76,20 @@
             android:textColor="@color/peach_darker"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
+
+        <Button
+            android:id="@+id/showTaskInput"
+            android:layout_width="100dp"
+            android:layout_height="60dp"
+            android:layout_marginEnd="300dp"
+            android:background="@android:color/transparent"
+            android:drawableLeft="@drawable/task_icon"
+            android:drawableTint="@color/peach_darker"
+            android:gravity="center"
+            android:textColor="@color/peach_darker"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>
