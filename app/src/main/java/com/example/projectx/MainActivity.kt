@@ -8,8 +8,8 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
-    val taskFragment = TaskFragment()
-    val completedFragment = CompletedFragment()
+    private val taskFragment = TaskFragment()
+    private val completedFragment = CompletedFragment()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

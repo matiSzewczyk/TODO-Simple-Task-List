@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -74,7 +73,6 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 val taskTitle = taskInput.text.toString()
                 if (taskTitle.isNotEmpty()) {
-                    val taskTitle = taskInput.text.toString()
                     val task = Task(taskTitle, null,  false)
                     todoAdapter.addTask(task, database)
                     taskInput.text.clear()

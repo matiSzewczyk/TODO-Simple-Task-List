@@ -27,7 +27,6 @@ class TodoAdapter(
     }
 
     private val database = AppDatabase.getDatabase(context)
-    private val completedAdapter = CompletedAdapter(context, mutableListOf())
 
     private fun addToCompleted(taskTitle: TextView) {
         val done = Completed(taskTitle.text.toString(), null, true)
@@ -36,13 +35,12 @@ class TodoAdapter(
     }
 
     override fun onBindViewHolder(holder: TodoViewHolder, position: Int) {
-        holder.itemView.apply {// This let's me directly call taskTitle instead of writing holder.itemView.taskTitle
+        holder.itemView.apply {
             taskTitle.text = todoList[position].task
             taskCheckBox.isChecked = todoList[position].checked
             taskCheckBox.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
                     addToCompleted(taskTitle)
-                    println("removed at: ${position}")
                     todoList.removeAt(holder.absoluteAdapterPosition)
                     notifyItemRemoved(holder.absoluteAdapterPosition)
                 }
