@@ -41,6 +41,7 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
 
         showTaskInput.setOnClickListener {
             descriptionInput.visibility = View.INVISIBLE
+            showDescriptionInput.visibility = View.VISIBLE
             showTaskInput.visibility = View.INVISIBLE
             taskInput.visibility = View.VISIBLE
         }
@@ -71,6 +72,7 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
                 addTask.visibility = View.VISIBLE
                 descriptionInput.visibility = View.INVISIBLE
                 taskInput.visibility = View.INVISIBLE
+                showTaskInput.visibility = View.INVISIBLE
                 imm.hideSoftInputFromWindow(view.windowToken, 0)
                 return@setOnEditorActionListener true
             }
@@ -87,6 +89,7 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
                     taskInput.clearFocus()
                     addTask.visibility = View.VISIBLE
                     taskInput.visibility = View.INVISIBLE
+                    showDescriptionInput.visibility = View.INVISIBLE
                     // Force the soft keyboard to hide
                     imm.hideSoftInputFromWindow(view.windowToken, 0)
                     return@setOnEditorActionListener true
@@ -94,6 +97,17 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
             }
             false
         }
+//        space.setOnClickListener {
+//            taskInput.clearFocus()
+//            taskInput.visibility = View.INVISIBLE
+//            descriptionInput.visibility = View.INVISIBLE
+//            addTask.visibility = View.VISIBLE
+//            showTaskInput.visibility = View.INVISIBLE
+//            showDescriptionInput.visibility = View.INVISIBLE
+//
+//            imm.hideSoftInputFromWindow(view.windowToken, 0)
+//        }
+
     }
 }
 
