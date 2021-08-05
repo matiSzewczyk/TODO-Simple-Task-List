@@ -68,6 +68,10 @@ class MainActivity : AppCompatActivity() {
                 database.completedDao().deleteSelected()
                 true
             }
+            R.id.settings_move_back -> {
+                completedAdapter.moveToTaskList()
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }

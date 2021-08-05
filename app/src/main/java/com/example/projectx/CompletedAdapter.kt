@@ -32,15 +32,21 @@ class CompletedAdapter(
             val checked: Boolean = completedList[position].checked
             taskCheckBox.setOnCheckedChangeListener { _, _ ->
                 if (checked) {
+                    println("The item count is: $itemCount")
                     database.completedDao()
                         .changeChecked(completedList[position].task, false)
                 } else {
                     database.completedDao()
                         .changeChecked(completedList[position].task, true)
                 }
-
             }
         }
+    }
+
+    private val todoAdapter = TodoAdapter(context, mutableListOf())
+    fun moveToTaskList() {
+        database.completedDao().moveToTaskList()
+        database.completedDao().deleteSelected()
     }
 
     fun deleteAll() {

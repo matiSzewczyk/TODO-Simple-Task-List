@@ -12,9 +12,6 @@ interface CompletedDao {
     @Query("SELECT * FROM completed")
     fun getAll(): MutableList<Completed>
 
-    @Query("DELETE FROM completed WHERE task = :task")
-    fun deleteTask(task: String)
-
     @Query("DELETE FROM completed")
     fun deleteAllTasks()
 
@@ -23,4 +20,10 @@ interface CompletedDao {
 
     @Query("UPDATE completed SET checked = :isChecked WHERE task = :task")
     fun changeChecked(task: String, isChecked: Boolean)
+
+    @Query("UPDATE completed SET checked = 1")
+    fun setAllToChecked()
+
+    @Query("INSERT INTO tasks SELECT * FROM completed WHERE checked = 1")
+    fun moveToTaskList()
 }

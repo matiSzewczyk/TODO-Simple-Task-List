@@ -6,4 +6,7 @@
     <item android:id="@+id/settings_selected"
         android:icon="@drawable/trash_icon"
         android:title="@string/settings_selected" />
+    <item android:id="@+id/settings_move_back"
+        android:icon="@drawable/trash_icon"
+        android:title="@string/settings_move_back" />
 </menu>

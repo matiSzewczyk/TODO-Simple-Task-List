@@ -15,12 +15,11 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Input method manager
         val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        // Init Database
 
         val todoAdapter = TodoAdapter(requireContext().applicationContext, mutableListOf())
         val database = AppDatabase.getDatabase(requireContext().applicationContext)
+        database.taskDao().setAllToUnchecked()
         todoAdapter.todoList = database.taskDao().getAll()
 
         taskList.adapter = todoAdapter
@@ -30,6 +29,12 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
         showDescriptionInput.visibility = View.INVISIBLE
         showTaskInput.visibility = View.INVISIBLE
         descriptionInput.visibility = View.INVISIBLE
+
+        if (todoAdapter.itemCount == 0) {
+            emptyTaskHint.visibility = View.VISIBLE
+        } else {
+            emptyTaskHint.visibility = View.INVISIBLE
+        }
 
         addTask.setOnClickListener {
             addTask.visibility = View.INVISIBLE
@@ -74,6 +79,7 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
                 taskInput.visibility = View.INVISIBLE
                 showTaskInput.visibility = View.INVISIBLE
                 imm.hideSoftInputFromWindow(view.windowToken, 0)
+                emptyTaskHint.visibility = View.INVISIBLE
                 return@setOnEditorActionListener true
             }
             false
@@ -90,6 +96,7 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
                     addTask.visibility = View.VISIBLE
                     taskInput.visibility = View.INVISIBLE
                     showDescriptionInput.visibility = View.INVISIBLE
+                    emptyTaskHint.visibility = View.INVISIBLE
                     // Force the soft keyboard to hide
                     imm.hideSoftInputFromWindow(view.windowToken, 0)
                     return@setOnEditorActionListener true

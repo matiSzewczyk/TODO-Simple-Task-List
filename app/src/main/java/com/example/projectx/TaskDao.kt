@@ -15,6 +15,9 @@ interface TaskDao {
     @Query("DELETE FROM tasks WHERE task = :task")
     fun deleteTask(task: String)
 
+    @Query("UPDATE tasks SET checked = 0")
+    fun setAllToUnchecked()
+
     @Query("SELECT checked FROM tasks WHERE task = :task")
     fun getChecked(task: String) : Boolean
 }
