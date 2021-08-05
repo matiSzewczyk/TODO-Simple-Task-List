@@ -1,5 +1,6 @@
 package com.example.projectx
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -43,12 +44,12 @@ class CompletedAdapter(
         }
     }
 
-    private val todoAdapter = TodoAdapter(context, mutableListOf())
     fun moveToTaskList() {
         database.completedDao().moveToTaskList()
         database.completedDao().deleteSelected()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun deleteAll() {
         println(completedList.size)
         database.completedDao().deleteAllTasks()
