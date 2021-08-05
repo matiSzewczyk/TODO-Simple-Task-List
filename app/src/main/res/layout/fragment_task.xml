@@ -13,7 +13,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/taskList"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
             android:layout_marginTop="5dp"
             android:focusableInTouchMode="true"
             app:layout_constraintEnd_toEndOf="parent"
@@ -105,7 +105,7 @@
 <!--        <TextureView-->
 <!--        android:id="@+id/space"-->
 <!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_height="0dp"-->
 <!--        app:layout_constraintBottom_toTopOf="@id/addTask"-->
 <!--        app:layout_constraintStart_toStartOf="parent"-->
 <!--        app:layout_constraintTop_toBottomOf="@id/taskList"-->

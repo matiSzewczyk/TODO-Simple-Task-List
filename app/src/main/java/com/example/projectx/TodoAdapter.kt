@@ -42,7 +42,7 @@ class TodoAdapter(
             taskCheckBox.isChecked = todoList[position].checked
             taskCheckBox.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
-                    taskDescription.text = todoList[position].description
+                    taskDescription.text = todoList[holder.absoluteAdapterPosition].description
                     addToCompleted(taskTitle, taskDescription)
                     todoList.removeAt(holder.absoluteAdapterPosition)
                     notifyItemRemoved(holder.absoluteAdapterPosition)
