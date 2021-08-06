@@ -17,7 +17,11 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
 
         val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
 
-        val todoAdapter = TodoAdapter(requireContext().applicationContext, mutableListOf())
+        val todoAdapter = TodoAdapter(
+            requireContext().applicationContext,
+            mutableListOf(),
+            fragment = TaskFragment()
+        )
         val database = AppDatabase.getDatabase(requireContext().applicationContext)
         database.taskDao().setAllToUnchecked()
         todoAdapter.todoList = database.taskDao().getAll()
@@ -104,6 +108,9 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
             }
             false
         }
+    }
+     fun test() {
+        Toast.makeText(context, "Please add a task first :)", Toast.LENGTH_SHORT).show()
 
     }
 }

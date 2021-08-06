@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/edit_description"
-        android:title="@string/edit_description" />
+    <item android:id="@+id/menu_header"
+        android:enabled="true"
+        android:title="@string/menu_header" />
+    <item android:id="@+id/menu_edit_desc"
+        android:enabled="true"
+        android:title="@string/menu_edit_desc" />
+    <item android:id="@+id/menu_delete_task"
+        android:enabled="true"
+        android:title="@string/menu_delete_task" />
 </menu>
