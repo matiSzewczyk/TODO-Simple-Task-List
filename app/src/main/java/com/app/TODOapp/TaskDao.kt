@@ -20,4 +20,7 @@ interface TaskDao {
 
     @Query("SELECT checked FROM tasks WHERE task = :task")
     fun getChecked(task: String) : Boolean
+
+    @Query("UPDATE tasks SET description = :description WHERE task = :task")
+    fun changeDescription(task: String, description: String)
 }

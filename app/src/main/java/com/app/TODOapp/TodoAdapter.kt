@@ -39,6 +39,7 @@ class TodoAdapter(
         database.taskDao().deleteTask(taskTitle.text.toString())
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onBindViewHolder(holder: TodoViewHolder, position: Int) {
         holder.itemView.apply {
             taskTitle.text = todoList[position].task
