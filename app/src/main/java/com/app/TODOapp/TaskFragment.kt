@@ -2,6 +2,7 @@ package com.app.TODOapp
 
 import android.content.Context
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
@@ -109,9 +110,19 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
             false
         }
     }
-     fun test() {
-        Toast.makeText(context, "Please add a task first :)", Toast.LENGTH_SHORT).show()
 
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_edit_desc -> {
+                Toast.makeText(context, "edit was pressed", Toast.LENGTH_SHORT).show()
+                true
+            }
+            R.id.menu_delete_task -> {
+                Toast.makeText(context, "delete was pressed", Toast.LENGTH_SHORT).show()
+                true
+            }
+            else -> super.onContextItemSelected(item)
+        }
     }
 }
 

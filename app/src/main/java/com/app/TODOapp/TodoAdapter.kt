@@ -16,7 +16,7 @@ class TodoAdapter(
     val context: Context, // Get the context of the app for the db
     var todoList: MutableList<Task>,
     val fragment: Fragment = TaskFragment()
-) : RecyclerView.Adapter<TodoAdapter.TodoViewHolder>(), View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener {
+) : RecyclerView.Adapter<TodoAdapter.TodoViewHolder>(), View.OnCreateContextMenuListener {
     private val menuInflater = MenuInflater(context)
 
     inner class TodoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
@@ -83,18 +83,4 @@ class TodoAdapter(
         inflater.inflate(R.menu.context_menu, p0)
     }
 
-    override fun onMenuItemClick(item: MenuItem?): Boolean {
-        return when (item?.itemId) {
-            R.id.menu_edit_desc -> {
-                Toast.makeText(context.applicationContext, " :)", Toast.LENGTH_SHORT).show()
-                fragment.descriptionInput.visibility = View.VISIBLE
-                true
-            }
-            R.id.menu_delete_task -> {
-                Toast.makeText(context, " :)", Toast.LENGTH_SHORT).show()
-                true
-            }
-            else -> false
-        }
-    }
 }
