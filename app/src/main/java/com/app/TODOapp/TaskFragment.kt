@@ -9,20 +9,22 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_task.*
 import kotlinx.android.synthetic.main.todo_item.*
 
 class TaskFragment : Fragment(R.layout.fragment_task) {
+    private lateinit var item: RecyclerView
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-
         val todoAdapter = TodoAdapter(
             requireContext().applicationContext,
             mutableListOf(),
             fragment = TaskFragment()
         )
+
         val database = AppDatabase.getDatabase(requireContext().applicationContext)
         database.taskDao().setAllToUnchecked()
         todoAdapter.todoList = database.taskDao().getAll()
@@ -34,6 +36,8 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
         showDescriptionInput.visibility = View.INVISIBLE
         showTaskInput.visibility = View.INVISIBLE
         descriptionInput.visibility = View.INVISIBLE
+
+
 
         if (todoAdapter.itemCount == 0) {
             emptyTaskHint.visibility = View.VISIBLE
