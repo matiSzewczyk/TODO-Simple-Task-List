@@ -1,4 +1,4 @@
-package com.example.TODOapp
+package com.app.TODOapp
 
 import android.content.Context
 import android.os.Bundle
@@ -104,16 +104,6 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
             }
             false
         }
-//        space.setOnClickListener {
-//            taskInput.clearFocus()
-//            taskInput.visibility = View.INVISIBLE
-//            descriptionInput.visibility = View.INVISIBLE
-//            addTask.visibility = View.VISIBLE
-//            showTaskInput.visibility = View.INVISIBLE
-//            showDescriptionInput.visibility = View.INVISIBLE
-//
-//            imm.hideSoftInputFromWindow(view.windowToken, 0)
-//        }
 
     }
 }

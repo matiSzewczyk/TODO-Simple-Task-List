@@ -1,4 +1,4 @@
-package com.example.TODOapp
+package com.app.TODOapp
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -51,11 +51,8 @@ class CompletedAdapter(
 
     @SuppressLint("NotifyDataSetChanged")
     fun deleteAll() {
-        println(completedList.size)
         database.completedDao().deleteAllTasks()
         completedList.clear()
-        println(completedList.size)
-        completedList = database.completedDao().getAll()
         notifyDataSetChanged()
     }
 }
