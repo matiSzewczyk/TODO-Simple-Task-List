@@ -38,40 +38,22 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
         taskList.adapter = todoAdapter
         taskList.layoutManager = LinearLayoutManager(parentFragment?.context)
 
-        taskInput.visibility = View.INVISIBLE
-        showDescriptionInput.visibility = View.INVISIBLE
-        showTaskInput.visibility = View.INVISIBLE
-        descriptionInput.visibility = View.INVISIBLE
-
-
-
-        if (todoAdapter.itemCount == 0) {
-            emptyTaskHint.visibility = View.VISIBLE
-        } else {
-            emptyTaskHint.visibility = View.INVISIBLE
-        }
+        visibilityInit()
 
         addTask.setOnClickListener {
-            addTask.visibility = View.INVISIBLE
-            taskInput.visibility = View.VISIBLE
-            showDescriptionInput.visibility = View.VISIBLE
+            visibilityAddTask()
             taskInput.requestFocus()
             imm.showSoftInput(taskInput, InputMethodManager.SHOW_IMPLICIT)
         }
 
         showTaskInput.setOnClickListener {
-            descriptionInput.visibility = View.INVISIBLE
-            showDescriptionInput.visibility = View.VISIBLE
-            showTaskInput.visibility = View.INVISIBLE
+            visibilityToggleTask()
             taskInput.visibility = View.VISIBLE
         }
 
         showDescriptionInput.setOnClickListener {
             if (taskInput.text.isNotEmpty()) {
-                showDescriptionInput.visibility = View.INVISIBLE
-                showTaskInput.visibility = View.VISIBLE
-                taskInput.visibility = View.INVISIBLE
-                descriptionInput.visibility = View.VISIBLE
+                visibilityToggleDescription()
                 descriptionInput.requestFocus()
                 imm.showSoftInput(descriptionInput, InputMethodManager.SHOW_IMPLICIT)
             } else {
@@ -89,12 +71,8 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
                 taskInput.clearFocus()
                 descriptionInput.text.clear()
                 descriptionInput.clearFocus()
-                addTask.visibility = View.VISIBLE
-                descriptionInput.visibility = View.INVISIBLE
-                taskInput.visibility = View.INVISIBLE
-                showTaskInput.visibility = View.INVISIBLE
+                visibilityPostInput()
                 imm.hideSoftInputFromWindow(view.windowToken, 0)
-                emptyTaskHint.visibility = View.INVISIBLE
                 return@setOnEditorActionListener true
             }
             false
@@ -108,10 +86,7 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
                     todoAdapter.addTask(task, database)
                     taskInput.text.clear()
                     taskInput.clearFocus()
-                    addTask.visibility = View.VISIBLE
-                    taskInput.visibility = View.INVISIBLE
-                    showDescriptionInput.visibility = View.INVISIBLE
-                    emptyTaskHint.visibility = View.INVISIBLE
+                    visibilityPostInput()
                     // Force the soft keyboard to hide
                     imm.hideSoftInputFromWindow(view.windowToken, 0)
                     return@setOnEditorActionListener true
@@ -125,12 +100,11 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
         val index = item.order
         return when (item.itemId) {
             R.id.menu_edit_desc -> {
-                Toast.makeText(context, "edit was pressed", Toast.LENGTH_SHORT).show()
                 descriptionInput.visibility = View.VISIBLE
                 addTask.visibility = View.INVISIBLE
                 descriptionInput.requestFocus()
                 imm.showSoftInput(descriptionInput, InputMethodManager.SHOW_IMPLICIT)
-                descriptionInput.setOnEditorActionListener { _, actionId, _ ->
+                descriptionInput.setOnEditorActionListener { _, _, _ ->
                     val task = todoAdapter.todoList[index].task.toString()
                     val taskDescription = descriptionInput.text.toString()
                     database.taskDao().changeDescription(task, taskDescription)
@@ -153,5 +127,44 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
             else -> super.onContextItemSelected(item)
         }
     }
+    private fun visibilityInit() {
+        taskInput.visibility = View.INVISIBLE
+        showDescriptionInput.visibility = View.INVISIBLE
+        showTaskInput.visibility = View.INVISIBLE
+        descriptionInput.visibility = View.INVISIBLE
+
+        if (todoAdapter.itemCount == 0) {
+            emptyTaskHint.visibility = View.VISIBLE
+        } else {
+            emptyTaskHint.visibility = View.INVISIBLE
+        }
+    }
+
+    private fun visibilityAddTask() {
+        addTask.visibility = View.INVISIBLE
+        taskInput.visibility = View.VISIBLE
+        showDescriptionInput.visibility = View.VISIBLE
+    }
+
+    private fun visibilityToggleTask() {
+        descriptionInput.visibility = View.INVISIBLE
+        showDescriptionInput.visibility = View.VISIBLE
+        showTaskInput.visibility = View.INVISIBLE
+    }
+    private fun visibilityToggleDescription() {
+        showDescriptionInput.visibility = View.INVISIBLE
+        showTaskInput.visibility = View.VISIBLE
+        taskInput.visibility = View.INVISIBLE
+        descriptionInput.visibility = View.VISIBLE
+    }
+
+    private fun visibilityPostInput() {
+        addTask.visibility = View.VISIBLE
+        descriptionInput.visibility = View.INVISIBLE
+        taskInput.visibility = View.INVISIBLE
+        showTaskInput.visibility = View.INVISIBLE
+        emptyTaskHint.visibility = View.INVISIBLE
+    }
+
 }
 
