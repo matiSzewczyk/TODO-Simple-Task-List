@@ -18,14 +18,14 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
 
     private lateinit var item: RecyclerView
     private lateinit var database: AppDatabase
-    private lateinit var todoAdapter: TodoAdapter
     private lateinit var imm: InputMethodManager
+    private lateinit var todoAdapter: TodoAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-         todoAdapter = TodoAdapter(
+        todoAdapter = TodoAdapter(
             requireContext().applicationContext,
             mutableListOf(),
             fragment = TaskFragment()
@@ -121,11 +121,39 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
         }
     }
 
-    override fun onContextItemSelected(item: MenuItem): Boolean {
-        val index = item.order
-        return when (item.itemId) {
-            R.id.menu_edit_desc -> {
-                Toast.makeText(context, "edit was pressed", Toast.LENGTH_SHORT).show()
+//    override fun onContextItemSelected(item: MenuItem): Boolean {
+//        val index = item.order
+//        return when (item.itemId) {
+//            R.id.menu_edit_desc -> {
+//                Toast.makeText(context, "edit was pressed", Toast.LENGTH_SHORT).show()
+//                descriptionInput.visibility = View.VISIBLE
+//                addTask.visibility = View.INVISIBLE
+//                descriptionInput.requestFocus()
+//                imm.showSoftInput(descriptionInput, InputMethodManager.SHOW_IMPLICIT)
+//                descriptionInput.setOnEditorActionListener { _, actionId, _ ->
+//                    val task = todoAdapter.todoList[index].task.toString()
+//                    val taskDescription = descriptionInput.text.toString()
+//                    database.taskDao().changeDescription(task, taskDescription)
+//                    imm.hideSoftInputFromWindow(view?.windowToken, 0)
+//                    descriptionInput.visibility = View.INVISIBLE
+//                    addTask.visibility = View.VISIBLE
+//                    todoAdapter.todoList[index] = Task(task, taskDescription)
+//                    todoAdapter.notifyItemChanged(index)
+//                    false
+//                }
+//                true
+//            }
+//            R.id.menu_delete_task -> {
+//                val task = todoAdapter.todoList[index].task.toString()
+//                database.taskDao().deleteTask(task)
+//                todoAdapter.todoList.removeAt(index)
+//                todoAdapter.notifyItemRemoved(index)
+//                true
+//            }
+//            else -> super.onContextItemSelected(item)
+//        }
+//    }
+    private fun test(index: Int) {
                 descriptionInput.visibility = View.VISIBLE
                 addTask.visibility = View.INVISIBLE
                 descriptionInput.requestFocus()
@@ -141,17 +169,6 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
                     todoAdapter.notifyItemChanged(index)
                     false
                 }
-                true
-            }
-            R.id.menu_delete_task -> {
-                val task = todoAdapter.todoList[index].task.toString()
-                database.taskDao().deleteTask(task)
-                todoAdapter.todoList.removeAt(index)
-                todoAdapter.notifyItemRemoved(index)
-                true
-            }
-            else -> super.onContextItemSelected(item)
-        }
     }
 }
 
