@@ -123,6 +123,7 @@ class TaskFragment : Fragment(R.layout.fragment_task), RecyclerViewInterface {
         val menu = PopupMenu(v.context, v)
         menu.inflate(R.menu.context_menu)
         menu.setOnMenuItemClickListener {
+            val task = todoAdapter.todoList[index].task
             when (it?.itemId) {
                 R.id.menu_edit_desc -> {
                     descriptionInput.visibility = View.VISIBLE
@@ -130,7 +131,6 @@ class TaskFragment : Fragment(R.layout.fragment_task), RecyclerViewInterface {
                     descriptionInput.requestFocus()
                     imm.showSoftInput(descriptionInput, InputMethodManager.SHOW_IMPLICIT)
                     descriptionInput.setOnEditorActionListener { _, _, _ ->
-                        val task = todoAdapter.todoList[index].task
                         val taskDescription = descriptionInput.text.toString()
                         database.taskDao().changeDescription(task, taskDescription)
                         imm.hideSoftInputFromWindow(view?.windowToken, 0)
@@ -143,6 +143,7 @@ class TaskFragment : Fragment(R.layout.fragment_task), RecyclerViewInterface {
                     true
                 }
                 R.id.menu_delete_task -> {
+                    database.taskDao().deleteTask(task)
                     todoAdapter.todoList.removeAt(index)
                     todoAdapter.notifyItemRemoved(index)
                     true
@@ -155,6 +156,7 @@ class TaskFragment : Fragment(R.layout.fragment_task), RecyclerViewInterface {
         return menu
     }
 
+    @SuppressLint("UseRequireInsteadOfGet")
     override fun myLongClickListener(position: Int, view: View?) {
         showPopupMenu(view!!, position)
     }
