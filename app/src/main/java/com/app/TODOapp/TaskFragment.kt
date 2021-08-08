@@ -36,6 +36,7 @@ class TaskFragment : Fragment(R.layout.fragment_task), RecyclerViewInterface {
         taskList.adapter = todoAdapter
         taskList.layoutManager = LinearLayoutManager(parentFragment?.context)
 
+<<<<<<< HEAD
         taskInput.visibility = View.INVISIBLE
         showDescriptionInput.visibility = View.INVISIBLE
         showTaskInput.visibility = View.INVISIBLE
@@ -48,28 +49,24 @@ class TaskFragment : Fragment(R.layout.fragment_task), RecyclerViewInterface {
         } else {
             emptyTaskHint.visibility = View.INVISIBLE
         }
+=======
+        visibilityInit()
+>>>>>>> 3717cec4f4d26855a4956cc5bbbc0145c71ef37a
 
         addTask.setOnClickListener {
-            addTask.visibility = View.INVISIBLE
-            taskInput.visibility = View.VISIBLE
-            showDescriptionInput.visibility = View.VISIBLE
+            visibilityAddTask()
             taskInput.requestFocus()
             imm.showSoftInput(taskInput, InputMethodManager.SHOW_IMPLICIT)
         }
 
         showTaskInput.setOnClickListener {
-            descriptionInput.visibility = View.INVISIBLE
-            showDescriptionInput.visibility = View.VISIBLE
-            showTaskInput.visibility = View.INVISIBLE
+            visibilityToggleTask()
             taskInput.visibility = View.VISIBLE
         }
 
         showDescriptionInput.setOnClickListener {
             if (taskInput.text.isNotEmpty()) {
-                showDescriptionInput.visibility = View.INVISIBLE
-                showTaskInput.visibility = View.VISIBLE
-                taskInput.visibility = View.INVISIBLE
-                descriptionInput.visibility = View.VISIBLE
+                visibilityToggleDescription()
                 descriptionInput.requestFocus()
                 imm.showSoftInput(descriptionInput, InputMethodManager.SHOW_IMPLICIT)
             } else {
@@ -87,12 +84,8 @@ class TaskFragment : Fragment(R.layout.fragment_task), RecyclerViewInterface {
                 taskInput.clearFocus()
                 descriptionInput.text.clear()
                 descriptionInput.clearFocus()
-                addTask.visibility = View.VISIBLE
-                descriptionInput.visibility = View.INVISIBLE
-                taskInput.visibility = View.INVISIBLE
-                showTaskInput.visibility = View.INVISIBLE
+                visibilityPostInput()
                 imm.hideSoftInputFromWindow(view.windowToken, 0)
-                emptyTaskHint.visibility = View.INVISIBLE
                 return@setOnEditorActionListener true
             }
             false
@@ -106,10 +99,7 @@ class TaskFragment : Fragment(R.layout.fragment_task), RecyclerViewInterface {
                     todoAdapter.addTask(task, database)
                     taskInput.text.clear()
                     taskInput.clearFocus()
-                    addTask.visibility = View.VISIBLE
-                    taskInput.visibility = View.INVISIBLE
-                    showDescriptionInput.visibility = View.INVISIBLE
-                    emptyTaskHint.visibility = View.INVISIBLE
+                    visibilityPostInput()
                     // Force the soft keyboard to hide
                     imm.hideSoftInputFromWindow(view.windowToken, 0)
                     return@setOnEditorActionListener true
@@ -119,6 +109,7 @@ class TaskFragment : Fragment(R.layout.fragment_task), RecyclerViewInterface {
         }
     }
 
+<<<<<<< HEAD
     private fun showPopupMenu(v: View, index: Int): PopupMenu {
         val menu = PopupMenu(v.context, v)
         menu.inflate(R.menu.context_menu)
@@ -141,6 +132,26 @@ class TaskFragment : Fragment(R.layout.fragment_task), RecyclerViewInterface {
                         false
                     }
                     true
+=======
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+        val index = item.order
+        return when (item.itemId) {
+            R.id.menu_edit_desc -> {
+                descriptionInput.visibility = View.VISIBLE
+                addTask.visibility = View.INVISIBLE
+                descriptionInput.requestFocus()
+                imm.showSoftInput(descriptionInput, InputMethodManager.SHOW_IMPLICIT)
+                descriptionInput.setOnEditorActionListener { _, _, _ ->
+                    val task = todoAdapter.todoList[index].task.toString()
+                    val taskDescription = descriptionInput.text.toString()
+                    database.taskDao().changeDescription(task, taskDescription)
+                    imm.hideSoftInputFromWindow(view?.windowToken, 0)
+                    descriptionInput.visibility = View.INVISIBLE
+                    addTask.visibility = View.VISIBLE
+                    todoAdapter.todoList[index] = Task(task, taskDescription)
+                    todoAdapter.notifyItemChanged(index)
+                    false
+>>>>>>> 3717cec4f4d26855a4956cc5bbbc0145c71ef37a
                 }
                 R.id.menu_delete_task -> {
                     todoAdapter.todoList.removeAt(index)
@@ -158,5 +169,44 @@ class TaskFragment : Fragment(R.layout.fragment_task), RecyclerViewInterface {
     override fun myLongClickListener(position: Int, view: View?) {
         showPopupMenu(view!!, position)
     }
+    private fun visibilityInit() {
+        taskInput.visibility = View.INVISIBLE
+        showDescriptionInput.visibility = View.INVISIBLE
+        showTaskInput.visibility = View.INVISIBLE
+        descriptionInput.visibility = View.INVISIBLE
+
+        if (todoAdapter.itemCount == 0) {
+            emptyTaskHint.visibility = View.VISIBLE
+        } else {
+            emptyTaskHint.visibility = View.INVISIBLE
+        }
+    }
+
+    private fun visibilityAddTask() {
+        addTask.visibility = View.INVISIBLE
+        taskInput.visibility = View.VISIBLE
+        showDescriptionInput.visibility = View.VISIBLE
+    }
+
+    private fun visibilityToggleTask() {
+        descriptionInput.visibility = View.INVISIBLE
+        showDescriptionInput.visibility = View.VISIBLE
+        showTaskInput.visibility = View.INVISIBLE
+    }
+    private fun visibilityToggleDescription() {
+        showDescriptionInput.visibility = View.INVISIBLE
+        showTaskInput.visibility = View.VISIBLE
+        taskInput.visibility = View.INVISIBLE
+        descriptionInput.visibility = View.VISIBLE
+    }
+
+    private fun visibilityPostInput() {
+        addTask.visibility = View.VISIBLE
+        descriptionInput.visibility = View.INVISIBLE
+        taskInput.visibility = View.INVISIBLE
+        showTaskInput.visibility = View.INVISIBLE
+        emptyTaskHint.visibility = View.INVISIBLE
+    }
+
 }
 
