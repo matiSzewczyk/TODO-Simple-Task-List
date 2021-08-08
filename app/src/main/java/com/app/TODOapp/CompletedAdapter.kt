@@ -5,6 +5,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.todo_item.view.*
 
@@ -46,6 +47,12 @@ class CompletedAdapter(
     fun moveToTaskList() {
         database.completedDao().moveToTaskList()
         database.completedDao().deleteSelected()
+    }
+
+    fun addToCompleted(taskTitle: TextView, taskDescription: TextView) {
+        val done = Completed(taskTitle.text.toString(), taskDescription.text.toString(), true)
+        database.completedDao().addCompleted(done)
+        database.taskDao().deleteTask(taskTitle.text.toString())
     }
 
     @SuppressLint("NotifyDataSetChanged")

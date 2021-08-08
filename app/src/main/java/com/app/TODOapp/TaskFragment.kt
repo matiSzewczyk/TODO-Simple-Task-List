@@ -17,6 +17,7 @@ class TaskFragment : Fragment(R.layout.fragment_task), RecyclerViewInterface {
 
     private lateinit var database: AppDatabase
     private lateinit var todoAdapter: TodoAdapter
+    private lateinit var completedAdapter: CompletedAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -25,6 +26,10 @@ class TaskFragment : Fragment(R.layout.fragment_task), RecyclerViewInterface {
             requireContext().applicationContext,
             mutableListOf(),
             this
+        )
+        completedAdapter = CompletedAdapter(
+            requireContext().applicationContext,
+            mutableListOf()
         )
 
         database = AppDatabase.getDatabase(requireContext().applicationContext)
@@ -182,16 +187,14 @@ class TaskFragment : Fragment(R.layout.fragment_task), RecyclerViewInterface {
         }
     }
 
-//                    if (!todoList[position].description.isNullOrEmpty()) {
-//                        if (taskDescription.text == "") {
-//                            taskTitle.text = ""
-//                            taskDescription.text = todoList[position].description
-//                        } else {
-//                            taskTitle.text = todoList[position].task
-//                            taskDescription.text = ""
-//                        }
-//                    } else {
-//                        Toast.makeText(context, "No description for task.", Toast.LENGTH_SHORT).show()
-//                    }
+    override fun myCheckedChangeListener(position: Int, isChecked: Boolean) {
+        if (isChecked) {
+            taskDescription.text = todoAdapter.todoList[position].description
+            completedAdapter.addToCompleted(taskTitle, taskDescription)
+            todoAdapter.todoList.removeAt(position)
+            todoAdapter.notifyItemRemoved(position)
+        }
+    }
+
 }
 

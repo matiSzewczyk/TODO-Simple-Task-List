@@ -4,8 +4,6 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.todo_item.view.*
 
@@ -25,6 +23,9 @@ class TodoAdapter(
             itemView.setOnClickListener {
                 myInterface.myClickListener(absoluteAdapterPosition, itemView)
             }
+            itemView.taskCheckBox.setOnCheckedChangeListener { _, isChecked ->
+                myInterface.myCheckedChangeListener(absoluteAdapterPosition, isChecked)
+            }
         }
     }
 
@@ -37,26 +38,10 @@ class TodoAdapter(
         return todoList.size
     }
 
-    private val database = AppDatabase.getDatabase(context)
-
-    private fun addToCompleted(taskTitle: TextView, taskDescription: TextView) {
-        val done = Completed(taskTitle.text.toString(), taskDescription.text.toString(), true)
-        database.completedDao().addCompleted(done)
-        database.taskDao().deleteTask(taskTitle.text.toString())
-    }
-
     override fun onBindViewHolder(holder: TodoViewHolder, position: Int) {
         holder.itemView.apply {
             taskTitle.text = todoList[position].task
             taskCheckBox.isChecked = todoList[position].checked
-            taskCheckBox.setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) {
-                    taskDescription.text = todoList[holder.absoluteAdapterPosition].description
-                    addToCompleted(taskTitle, taskDescription)
-                    todoList.removeAt(holder.absoluteAdapterPosition)
-                    notifyItemRemoved(holder.absoluteAdapterPosition)
-                }
-            }
         }
     }
 
