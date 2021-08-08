@@ -16,13 +16,11 @@ import kotlinx.android.synthetic.main.todo_item.*
 class TaskFragment : Fragment(R.layout.fragment_task), RecyclerViewInterface {
 
     private lateinit var database: AppDatabase
-    private lateinit var imm: InputMethodManager
     private lateinit var todoAdapter: TodoAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         todoAdapter = TodoAdapter(
             requireContext().applicationContext,
             mutableListOf(),
@@ -53,8 +51,7 @@ class TaskFragment : Fragment(R.layout.fragment_task), RecyclerViewInterface {
             addTask.visibility = View.INVISIBLE
             taskInput.visibility = View.VISIBLE
             showDescriptionInput.visibility = View.VISIBLE
-            taskInput.requestFocus()
-            imm.showSoftInput(taskInput, InputMethodManager.SHOW_IMPLICIT)
+            showSoftKeyboard(taskInput)
         }
 
         showTaskInput.setOnClickListener {
@@ -70,8 +67,7 @@ class TaskFragment : Fragment(R.layout.fragment_task), RecyclerViewInterface {
                 showTaskInput.visibility = View.VISIBLE
                 taskInput.visibility = View.INVISIBLE
                 descriptionInput.visibility = View.VISIBLE
-                descriptionInput.requestFocus()
-                imm.showSoftInput(descriptionInput, InputMethodManager.SHOW_IMPLICIT)
+                showSoftKeyboard(descriptionInput)
             } else {
                 Toast.makeText(context, "Please add a task first :)", Toast.LENGTH_SHORT).show()
             }
@@ -86,12 +82,11 @@ class TaskFragment : Fragment(R.layout.fragment_task), RecyclerViewInterface {
                 taskInput.text.clear()
                 taskInput.clearFocus()
                 descriptionInput.text.clear()
-                descriptionInput.clearFocus()
                 addTask.visibility = View.VISIBLE
                 descriptionInput.visibility = View.INVISIBLE
                 taskInput.visibility = View.INVISIBLE
                 showTaskInput.visibility = View.INVISIBLE
-                imm.hideSoftInputFromWindow(view.windowToken, 0)
+                hideSoftKeyboard(descriptionInput)
                 emptyTaskHint.visibility = View.INVISIBLE
                 return@setOnEditorActionListener true
             }
@@ -105,18 +100,30 @@ class TaskFragment : Fragment(R.layout.fragment_task), RecyclerViewInterface {
                     val task = Task(taskTitle, null,  false)
                     todoAdapter.addTask(task, database)
                     taskInput.text.clear()
-                    taskInput.clearFocus()
                     addTask.visibility = View.VISIBLE
                     taskInput.visibility = View.INVISIBLE
                     showDescriptionInput.visibility = View.INVISIBLE
                     emptyTaskHint.visibility = View.INVISIBLE
                     // Force the soft keyboard to hide
-                    imm.hideSoftInputFromWindow(view.windowToken, 0)
+                    hideSoftKeyboard(taskInput)
                     return@setOnEditorActionListener true
                 }
             }
             false
         }
+    }
+
+    private fun showSoftKeyboard(view: View) {
+        if (view.requestFocus()) {
+            val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
+        }
+    }
+
+    private fun hideSoftKeyboard(view: View) {
+        val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
+        view.clearFocus()
     }
 
     private fun showPopupMenu(v: View, index: Int): PopupMenu {
@@ -128,12 +135,11 @@ class TaskFragment : Fragment(R.layout.fragment_task), RecyclerViewInterface {
                 R.id.menu_edit_desc -> {
                     descriptionInput.visibility = View.VISIBLE
                     addTask.visibility = View.INVISIBLE
-                    descriptionInput.requestFocus()
-                    imm.showSoftInput(descriptionInput, InputMethodManager.SHOW_IMPLICIT)
+                    showSoftKeyboard(descriptionInput)
                     descriptionInput.setOnEditorActionListener { _, _, _ ->
                         val taskDescription = descriptionInput.text.toString()
                         database.taskDao().changeDescription(task, taskDescription)
-                        imm.hideSoftInputFromWindow(view?.windowToken, 0)
+                        hideSoftKeyboard(descriptionInput)
                         descriptionInput.visibility = View.INVISIBLE
                         addTask.visibility = View.VISIBLE
                         todoAdapter.todoList[index] = Task(task, taskDescription)
