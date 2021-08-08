@@ -57,6 +57,7 @@ class CompletedAdapter(
 
     @SuppressLint("NotifyDataSetChanged")
     fun deleteAll() {
+        println("size: $itemCount")
         database.completedDao().deleteAllTasks()
         completedList.clear()
         notifyDataSetChanged()

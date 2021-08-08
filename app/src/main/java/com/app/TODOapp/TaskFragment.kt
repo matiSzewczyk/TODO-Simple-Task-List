@@ -162,7 +162,6 @@ class TaskFragment : Fragment(R.layout.fragment_task), RecyclerViewInterface {
                 }
                 else -> false
             }
-
         }
         menu.show()
         return menu

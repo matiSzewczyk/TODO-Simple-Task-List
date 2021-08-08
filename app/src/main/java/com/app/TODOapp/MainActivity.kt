@@ -1,8 +1,6 @@
 package com.app.TODOapp
 
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -50,30 +48,4 @@ class MainActivity : AppCompatActivity() {
             addToBackStack(null)
             commit()
         }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        val inflater = menuInflater
-        inflater.inflate(R.menu.options_menu, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val database = AppDatabase.getDatabase(applicationContext)
-        val completedAdapter = CompletedAdapter(applicationContext, mutableListOf())
-        return when (item.itemId) {
-            R.id.settings_all -> {
-                completedAdapter.deleteAll()
-                true
-            }
-            R.id.settings_selected -> {
-                database.completedDao().deleteSelected()
-                true
-            }
-            R.id.settings_move_back -> {
-                completedAdapter.moveToTaskList()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
 }
