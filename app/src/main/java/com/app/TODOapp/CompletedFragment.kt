@@ -14,6 +14,7 @@ class CompletedFragment : Fragment(R.layout.fragment_completed) {
 
         val completedAdapter = CompletedAdapter(requireContext(), mutableListOf())
         val database = AppDatabase.getDatabase(requireContext().applicationContext)
+
         val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view.windowToken, 0)
 

@@ -22,6 +22,9 @@ class TodoAdapter(
                 myInterface.myLongClickListener(absoluteAdapterPosition, itemView)
                 true
             }
+            itemView.setOnClickListener {
+                myInterface.myClickListener(absoluteAdapterPosition, itemView)
+            }
         }
     }
 
@@ -52,21 +55,6 @@ class TodoAdapter(
                     addToCompleted(taskTitle, taskDescription)
                     todoList.removeAt(holder.absoluteAdapterPosition)
                     notifyItemRemoved(holder.absoluteAdapterPosition)
-                }
-            }
-        }
-        holder.itemView.setOnClickListener {
-            holder.itemView.apply {
-                if (!todoList[position].description.isNullOrEmpty()) {
-                    if (taskDescription.text == "") {
-                        taskTitle.text = ""
-                        taskDescription.text = todoList[position].description
-                    } else {
-                        taskTitle.text = todoList[position].task
-                        taskDescription.text = ""
-                    }
-                } else {
-                    Toast.makeText(context, "No description for task.", Toast.LENGTH_SHORT).show()
                 }
             }
         }

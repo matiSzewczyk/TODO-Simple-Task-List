@@ -167,5 +167,31 @@ class TaskFragment : Fragment(R.layout.fragment_task), RecyclerViewInterface {
     override fun myLongClickListener(position: Int, view: View?) {
         showPopupMenu(view!!, position)
     }
+
+    override fun myClickListener(position: Int, view: View?) {
+        if (!todoAdapter.todoList[position].description.isNullOrEmpty()) {
+            if (taskDescription.text == "") {
+                taskTitle.text = ""
+                taskDescription.text = todoAdapter.todoList[position].description
+            } else {
+                taskTitle.text = todoAdapter.todoList[position].task
+                taskDescription.text = ""
+            }
+        } else {
+            Toast.makeText(context, "No description for task.", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+//                    if (!todoList[position].description.isNullOrEmpty()) {
+//                        if (taskDescription.text == "") {
+//                            taskTitle.text = ""
+//                            taskDescription.text = todoList[position].description
+//                        } else {
+//                            taskTitle.text = todoList[position].task
+//                            taskDescription.text = ""
+//                        }
+//                    } else {
+//                        Toast.makeText(context, "No description for task.", Toast.LENGTH_SHORT).show()
+//                    }
 }
 
