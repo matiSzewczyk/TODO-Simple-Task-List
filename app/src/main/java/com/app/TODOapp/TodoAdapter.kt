@@ -77,18 +77,4 @@ class TodoAdapter(
         db.taskDao().insertTask(task)
         notifyItemInserted(todoList.size - 1)
     }
-<<<<<<< HEAD
-=======
-
-    @RequiresApi(Build.VERSION_CODES.M)
-    override fun onCreateContextMenu(
-        menu: ContextMenu?,
-        p1: View?,
-        p2: ContextMenu.ContextMenuInfo?
-    ) {
-        val inflater = menuInflater
-        inflater.inflate(R.menu.context_menu, p0)
-    }
-
->>>>>>> 3717cec4f4d26855a4956cc5bbbc0145c71ef37a
 }
