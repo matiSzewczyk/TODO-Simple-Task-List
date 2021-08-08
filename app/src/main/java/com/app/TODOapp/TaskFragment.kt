@@ -139,6 +139,7 @@ class TaskFragment : Fragment(R.layout.fragment_task), RecyclerViewInterface {
                     descriptionInput.setOnEditorActionListener { _, _, _ ->
                         val taskDescription = descriptionInput.text.toString()
                         database.taskDao().changeDescription(task, taskDescription)
+                        descriptionInput.text.clear()
                         hideSoftKeyboard(descriptionInput)
                         descriptionInput.visibility = View.INVISIBLE
                         addTask.visibility = View.VISIBLE
