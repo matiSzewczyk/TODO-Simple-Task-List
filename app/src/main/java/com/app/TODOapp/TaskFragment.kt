@@ -1,22 +1,20 @@
 package com.app.TODOapp
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
-import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.widget.AdapterView
+import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_task.*
 import kotlinx.android.synthetic.main.todo_item.*
 
-class TaskFragment : Fragment(R.layout.fragment_task) {
+class TaskFragment : Fragment(R.layout.fragment_task), RecyclerViewInterface {
 
-    private lateinit var item: RecyclerView
     private lateinit var database: AppDatabase
     private lateinit var imm: InputMethodManager
     private lateinit var todoAdapter: TodoAdapter
@@ -28,7 +26,7 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
         todoAdapter = TodoAdapter(
             requireContext().applicationContext,
             mutableListOf(),
-            fragment = TaskFragment()
+            this
         )
 
         database = AppDatabase.getDatabase(requireContext().applicationContext)
@@ -43,7 +41,7 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
         showTaskInput.visibility = View.INVISIBLE
         descriptionInput.visibility = View.INVISIBLE
 
-
+        registerForContextMenu(taskList)
 
         if (todoAdapter.itemCount == 0) {
             emptyTaskHint.visibility = View.VISIBLE
@@ -121,54 +119,44 @@ class TaskFragment : Fragment(R.layout.fragment_task) {
         }
     }
 
-//    override fun onContextItemSelected(item: MenuItem): Boolean {
-//        val index = item.order
-//        return when (item.itemId) {
-//            R.id.menu_edit_desc -> {
-//                Toast.makeText(context, "edit was pressed", Toast.LENGTH_SHORT).show()
-//                descriptionInput.visibility = View.VISIBLE
-//                addTask.visibility = View.INVISIBLE
-//                descriptionInput.requestFocus()
-//                imm.showSoftInput(descriptionInput, InputMethodManager.SHOW_IMPLICIT)
-//                descriptionInput.setOnEditorActionListener { _, actionId, _ ->
-//                    val task = todoAdapter.todoList[index].task.toString()
-//                    val taskDescription = descriptionInput.text.toString()
-//                    database.taskDao().changeDescription(task, taskDescription)
-//                    imm.hideSoftInputFromWindow(view?.windowToken, 0)
-//                    descriptionInput.visibility = View.INVISIBLE
-//                    addTask.visibility = View.VISIBLE
-//                    todoAdapter.todoList[index] = Task(task, taskDescription)
-//                    todoAdapter.notifyItemChanged(index)
-//                    false
-//                }
-//                true
-//            }
-//            R.id.menu_delete_task -> {
-//                val task = todoAdapter.todoList[index].task.toString()
-//                database.taskDao().deleteTask(task)
-//                todoAdapter.todoList.removeAt(index)
-//                todoAdapter.notifyItemRemoved(index)
-//                true
-//            }
-//            else -> super.onContextItemSelected(item)
-//        }
-//    }
-    private fun test(index: Int) {
-                descriptionInput.visibility = View.VISIBLE
-                addTask.visibility = View.INVISIBLE
-                descriptionInput.requestFocus()
-                imm.showSoftInput(descriptionInput, InputMethodManager.SHOW_IMPLICIT)
-                descriptionInput.setOnEditorActionListener { _, actionId, _ ->
-                    val task = todoAdapter.todoList[index].task.toString()
-                    val taskDescription = descriptionInput.text.toString()
-                    database.taskDao().changeDescription(task, taskDescription)
-                    imm.hideSoftInputFromWindow(view?.windowToken, 0)
-                    descriptionInput.visibility = View.INVISIBLE
-                    addTask.visibility = View.VISIBLE
-                    todoAdapter.todoList[index] = Task(task, taskDescription)
-                    todoAdapter.notifyItemChanged(index)
-                    false
+    private fun showPopupMenu(v: View, index: Int): PopupMenu {
+        val menu = PopupMenu(v.context, v)
+        menu.inflate(R.menu.context_menu)
+        menu.setOnMenuItemClickListener {
+            when (it?.itemId) {
+                R.id.menu_edit_desc -> {
+                    descriptionInput.visibility = View.VISIBLE
+                    addTask.visibility = View.INVISIBLE
+                    descriptionInput.requestFocus()
+                    imm.showSoftInput(descriptionInput, InputMethodManager.SHOW_IMPLICIT)
+                    descriptionInput.setOnEditorActionListener { _, _, _ ->
+                        val task = todoAdapter.todoList[index].task
+                        val taskDescription = descriptionInput.text.toString()
+                        database.taskDao().changeDescription(task, taskDescription)
+                        imm.hideSoftInputFromWindow(view?.windowToken, 0)
+                        descriptionInput.visibility = View.INVISIBLE
+                        addTask.visibility = View.VISIBLE
+                        todoAdapter.todoList[index] = Task(task, taskDescription)
+                        todoAdapter.notifyItemChanged(index)
+                        false
+                    }
+                    true
                 }
+                R.id.menu_delete_task -> {
+                    todoAdapter.todoList.removeAt(index)
+                    todoAdapter.notifyItemRemoved(index)
+                    true
+                }
+                else -> false
+            }
+
+        }
+        menu.show()
+        return menu
+    }
+
+    override fun myLongClickListener(position: Int, view: View?) {
+        showPopupMenu(view!!, position)
     }
 }
 

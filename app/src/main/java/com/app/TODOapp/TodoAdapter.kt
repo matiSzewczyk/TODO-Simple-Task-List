@@ -1,67 +1,32 @@
 package com.app.TODOapp
 
 import android.content.Context
-import android.os.Build
-import android.view.*
-import android.view.inputmethod.InputMethodManager
-import android.widget.PopupMenu
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import androidx.annotation.RequiresApi
-import androidx.core.content.ContextCompat.getSystemService
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.fragment_task.*
 import kotlinx.android.synthetic.main.todo_item.view.*
 
 
 class TodoAdapter(
     val context: Context, // Get the context of the app for the db
     var todoList: MutableList<Task>,
-    val fragment: Fragment = TaskFragment()
-) : RecyclerView.Adapter<TodoAdapter.TodoViewHolder>(), View.OnLongClickListener,
-    PopupMenu.OnMenuItemClickListener {
-    private val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-    private val menuInflater = MenuInflater(context)
+    private val  myInterface: RecyclerViewInterface
+) : RecyclerView.Adapter<TodoAdapter.TodoViewHolder>() {
 
     inner class TodoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         init {
-            apply {
-                itemView.setOnLongClickListener {
-                    showPopupMenu(itemView).setOnMenuItemClickListener {
-                        val index = layoutPosition
-                        when (it?.itemId) {
-                            R.id.menu_edit_desc -> {
-//                                fragment.test(index)
-                                true
-                            }
-                            R.id.menu_delete_task -> {
-                                val task = todoList[index].task.toString()
-                                database.taskDao().deleteTask(task)
-                                todoList.removeAt(index)
-                                notifyItemRemoved(index)
-                                true
-                            }
-                            else -> false
-                        }
-                    }
-                    true
-                }
+            itemView.setOnLongClickListener {
+                myInterface.myLongClickListener(absoluteAdapterPosition, itemView)
+                true
             }
         }
     }
 
-    private fun showPopupMenu(v: View): PopupMenu {
-        val menu = PopupMenu(v.context, v)
-        menu.inflate(R.menu.context_menu)
-        menu.setOnMenuItemClickListener(this)
-        menu.show()
-        return menu
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TodoViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.todo_item, parent, false)
-        view.setOnLongClickListener(this)
         return TodoViewHolder(view)
     }
 
@@ -111,13 +76,5 @@ class TodoAdapter(
         todoList.add(task)
         db.taskDao().insertTask(task)
         notifyItemInserted(todoList.size - 1)
-    }
-
-    override fun onLongClick(p0: View?): Boolean {
-        TODO("Not yet implemented")
-    }
-
-    override fun onMenuItemClick(p0: MenuItem?): Boolean {
-        TODO("Not yet implemented")
     }
 }

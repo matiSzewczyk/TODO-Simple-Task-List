@@ -33,7 +33,6 @@ class CompletedAdapter(
             val checked: Boolean = completedList[position].checked
             taskCheckBox.setOnCheckedChangeListener { _, _ ->
                 if (checked) {
-                    println("The item count is: $itemCount")
                     database.completedDao()
                         .changeChecked(completedList[position].task, false)
                 } else {
