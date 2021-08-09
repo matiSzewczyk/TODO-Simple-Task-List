@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.widget.CheckBox
 import android.widget.PopupMenu
 import android.widget.TextView
 import android.widget.Toast
@@ -175,27 +176,28 @@ class TaskFragment : Fragment(R.layout.fragment_task), RecyclerViewInterface {
 
     override fun myClickListener(position: Int, view: View?) {
         val title = view?.findViewById<TextView>(R.id.taskTitle)
-        val desc = view?.findViewById<TextView>(R.id.taskDescription)
+        val description = view?.findViewById<TextView>(R.id.taskDescription)
 
             if (!todoAdapter.todoList[position].description.isNullOrEmpty()) {
-                if (desc?.text == "") {
-                    println("id of title: ${taskTitle.text}")
+                if (description?.text == "") {
                     title?.text = ""
-                    desc.text = todoAdapter.todoList[position].description
+                    description.text = todoAdapter.todoList[position].description
                 } else {
                     title?.text = todoAdapter.todoList[position].task
-                    desc?.text = ""
+                    description?.text = ""
                 }
             } else {
                 Toast.makeText(context, "No description for task.", Toast.LENGTH_SHORT).show()
             }
     }
 
-    override fun myCheckedChangeListener(position: Int, isChecked: Boolean) {
-        val description = view?.findViewById<TextView>(R.id.taskDescription)
+    override fun myCheckedChangeListener(position: Int, isChecked: Boolean, view: View) {
+        val description = view.findViewById<TextView>(R.id.taskDescription)
+        val title = view.findViewById<TextView>(R.id.taskTitle)
+
         if (isChecked) {
             description?.text = todoAdapter.todoList[position].description
-            completedAdapter.addToCompleted(taskTitle, taskDescription)
+            completedAdapter.addToCompleted(title, description)
             todoAdapter.todoList.removeAt(position)
             todoAdapter.notifyItemRemoved(position)
         }

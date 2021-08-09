@@ -5,5 +5,5 @@ import android.view.View
 interface RecyclerViewInterface {
     fun myLongClickListener(position: Int, view: View?)
     fun myClickListener(position: Int, view: View?)
-    fun myCheckedChangeListener(position: Int, isChecked: Boolean)
+    fun myCheckedChangeListener(position: Int, isChecked: Boolean, view: View)
 }

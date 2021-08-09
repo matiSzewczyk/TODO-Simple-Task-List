@@ -25,7 +25,7 @@ class TodoAdapter(
                     myInterface.myClickListener(absoluteAdapterPosition, itemView)
                 }
                 itemView.taskCheckBox.setOnCheckedChangeListener { _, isChecked ->
-                    myInterface.myCheckedChangeListener(absoluteAdapterPosition, isChecked)
+                    myInterface.myCheckedChangeListener(absoluteAdapterPosition, isChecked, itemView)
                 }
             }
         }
