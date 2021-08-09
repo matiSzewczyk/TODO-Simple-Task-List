@@ -16,15 +16,17 @@ class TodoAdapter(
 
     inner class TodoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         init {
-            itemView.setOnLongClickListener {
-                myInterface.myLongClickListener(absoluteAdapterPosition, itemView)
-                true
-            }
-            itemView.setOnClickListener {
-                myInterface.myClickListener(absoluteAdapterPosition, itemView)
-            }
-            itemView.taskCheckBox.setOnCheckedChangeListener { _, isChecked ->
-                myInterface.myCheckedChangeListener(absoluteAdapterPosition, isChecked)
+            apply {
+                itemView.setOnLongClickListener {
+                    myInterface.myLongClickListener(absoluteAdapterPosition, itemView)
+                    true
+                }
+                itemView.setOnClickListener {
+                    myInterface.myClickListener(absoluteAdapterPosition, itemView)
+                }
+                itemView.taskCheckBox.setOnCheckedChangeListener { _, isChecked ->
+                    myInterface.myCheckedChangeListener(absoluteAdapterPosition, isChecked)
+                }
             }
         }
     }

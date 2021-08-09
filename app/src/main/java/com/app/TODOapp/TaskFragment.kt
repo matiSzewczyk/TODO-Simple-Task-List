@@ -7,9 +7,11 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.PopupMenu
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_task.*
 import kotlinx.android.synthetic.main.todo_item.*
 
@@ -131,7 +133,7 @@ class TaskFragment : Fragment(R.layout.fragment_task), RecyclerViewInterface {
         view.clearFocus()
     }
 
-    private fun showPopupMenu(v: View, index: Int): PopupMenu {
+    private fun showPopupMenu(v: View, index: Int) {
         val menu = PopupMenu(v.context, v)
         menu.inflate(R.menu.context_menu)
         menu.setOnMenuItemClickListener {
@@ -164,7 +166,6 @@ class TaskFragment : Fragment(R.layout.fragment_task), RecyclerViewInterface {
             }
         }
         menu.show()
-        return menu
     }
 
     @SuppressLint("UseRequireInsteadOfGet")
@@ -173,27 +174,31 @@ class TaskFragment : Fragment(R.layout.fragment_task), RecyclerViewInterface {
     }
 
     override fun myClickListener(position: Int, view: View?) {
-        if (!todoAdapter.todoList[position].description.isNullOrEmpty()) {
-            if (taskDescription.text == "") {
-                taskTitle.text = ""
-                taskDescription.text = todoAdapter.todoList[position].description
+        val title = view?.findViewById<TextView>(R.id.taskTitle)
+        val desc = view?.findViewById<TextView>(R.id.taskDescription)
+
+            if (!todoAdapter.todoList[position].description.isNullOrEmpty()) {
+                if (desc?.text == "") {
+                    println("id of title: ${taskTitle.text}")
+                    title?.text = ""
+                    desc.text = todoAdapter.todoList[position].description
+                } else {
+                    title?.text = todoAdapter.todoList[position].task
+                    desc?.text = ""
+                }
             } else {
-                taskTitle.text = todoAdapter.todoList[position].task
-                taskDescription.text = ""
+                Toast.makeText(context, "No description for task.", Toast.LENGTH_SHORT).show()
             }
-        } else {
-            Toast.makeText(context, "No description for task.", Toast.LENGTH_SHORT).show()
-        }
     }
 
     override fun myCheckedChangeListener(position: Int, isChecked: Boolean) {
+        val description = view?.findViewById<TextView>(R.id.taskDescription)
         if (isChecked) {
-            taskDescription.text = todoAdapter.todoList[position].description
+            description?.text = todoAdapter.todoList[position].description
             completedAdapter.addToCompleted(taskTitle, taskDescription)
             todoAdapter.todoList.removeAt(position)
             todoAdapter.notifyItemRemoved(position)
         }
     }
-
 }
 
