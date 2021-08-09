@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.todo_item.view.*
 
 
+@SuppressLint("NotifyDataSetChanged")
 class CompletedAdapter(
     val context: Context, // Get the context of the app for the db
     var completedList: MutableList<Completed>
@@ -47,6 +48,16 @@ class CompletedAdapter(
     fun moveToTaskList() {
         database.completedDao().moveToTaskList()
         database.completedDao().deleteSelected()
+        completedList.clear()
+        completedList = database.completedDao().getAll()
+        notifyDataSetChanged()
+    }
+
+    fun deleteSelected() {
+        database.completedDao().deleteSelected()
+        completedList.clear()
+        completedList = database.completedDao().getAll()
+        notifyDataSetChanged()
     }
 
     fun addToCompleted(taskTitle: TextView, taskDescription: TextView) {
@@ -55,7 +66,6 @@ class CompletedAdapter(
         database.taskDao().deleteTask(taskTitle.text.toString())
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     fun deleteAll() {
         database.completedDao().deleteAllTasks()
         completedList.clear()

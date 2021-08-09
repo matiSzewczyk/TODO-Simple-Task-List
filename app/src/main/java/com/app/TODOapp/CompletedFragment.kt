@@ -12,12 +12,19 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_completed.*
 
 class CompletedFragment : Fragment(R.layout.fragment_completed) {
+
+    private lateinit var completedAdapter: CompletedAdapter
+    private lateinit var database: AppDatabase
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
 
-        val completedAdapter = CompletedAdapter(requireContext(), mutableListOf())
-        val database = AppDatabase.getDatabase(requireContext().applicationContext)
+        completedAdapter = CompletedAdapter(
+            requireContext(),
+            mutableListOf()
+        )
+        database = AppDatabase.getDatabase(requireContext().applicationContext)
 
         val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view.windowToken, 0)
@@ -25,8 +32,8 @@ class CompletedFragment : Fragment(R.layout.fragment_completed) {
         database.completedDao().setAllToChecked()
         completedAdapter.completedList = database.completedDao().getAll()
 
-        completedList.adapter = completedAdapter
-        completedList.layoutManager = LinearLayoutManager(parentFragment?.context)
+        completedTaskList.adapter = completedAdapter
+        completedTaskList.layoutManager = LinearLayoutManager(parentFragment?.context)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -35,15 +42,13 @@ class CompletedFragment : Fragment(R.layout.fragment_completed) {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val database = AppDatabase.getDatabase(requireContext())
-        val completedAdapter = CompletedAdapter(requireContext(), mutableListOf())
         return when (item.itemId) {
             R.id.settings_all -> {
                 completedAdapter.deleteAll()
                 true
             }
             R.id.settings_selected -> {
-                database.completedDao().deleteSelected()
+                completedAdapter.deleteSelected()
                 true
             }
             R.id.settings_move_back -> {

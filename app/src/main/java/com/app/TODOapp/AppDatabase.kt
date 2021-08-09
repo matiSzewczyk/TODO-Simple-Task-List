@@ -5,10 +5,9 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [Task::class, Completed::class], version = 1, exportSchema = false)
+@Database(entities = [Task::class, Completed::class], version = 2, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
-//    private val DB_NAME: String = "taskDb"
     abstract fun taskDao(): TaskDao
     abstract fun completedDao(): CompletedDao
 
