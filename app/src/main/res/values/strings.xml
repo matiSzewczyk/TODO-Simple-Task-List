@@ -2,17 +2,20 @@
     <string name="app_name">TODO</string>
     <string name="bottom_menu_tasks">Tasks</string>
     <string name="bottom_menu_completed">Completed</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Settings -->
     <string name="settings_all">Delete all</string>
     <string name="settings_selected">Delete selected</string>
     <string name="settings_move_back">Move selected to task list</string>
-    <string name="taskHint">What\'s next? ;)</string>
-    <string name="descriptionHint">Task Description</string>
+    <!-- Hints -->
+    <string name="task_hint">What\'s next? ;)</string>
+    <string name="details_hint">Details</string>
+    <string name="empty_task_hint">Nothing here yet, let\'s get started!</string>
+    <!-- Button -->
     <string name="add_button_plus">+</string>
-    <string name="add_description">Description</string>
-    <string name="menu_edit_desc">Edit Description</string>
+    <!-- Menu text -->
+    <string name="menu_edit_details">Edit Details</string>
     <string name="menu_header">Options</string>
     <string name="menu_delete_task">Delete Task</string>
-    <string name="empty_task_hint">Nothing here yet, let\'s get started!</string>
+
 </resources>

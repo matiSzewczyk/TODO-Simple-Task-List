@@ -14,5 +14,5 @@
     <color name="et_color_lighter">#ffffff</color>
     <color name="et_color_darker">#ffefeb</color>
     <color name="hint_color">#ffbba6</color>
-    <color name="description_font">#dbdbdb</color>
+    <color name="details_font">#dbdbdb</color>
 </resources>

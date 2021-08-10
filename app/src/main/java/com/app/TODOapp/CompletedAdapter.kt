@@ -60,8 +60,8 @@ class CompletedAdapter(
         notifyDataSetChanged()
     }
 
-    fun addToCompleted(taskTitle: TextView, taskDescription: TextView) {
-        val done = Completed(taskTitle.text.toString(), taskDescription.text.toString(), true)
+    fun addToCompleted(taskTitle: TextView, taskDetails: TextView) {
+        val done = Completed(taskTitle.text.toString(), taskDetails.text.toString(), true)
         database.completedDao().addCompleted(done)
         database.taskDao().deleteTask(taskTitle.text.toString())
     }

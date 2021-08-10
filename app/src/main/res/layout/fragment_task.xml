@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:maxWidth="220dp"
             android:height="48dp"
-            android:hint="@string/taskHint"
+            android:hint="@string/task_hint"
             android:imeOptions="actionDone"
             android:inputType="textCapSentences"
             android:textColorHint="@color/hint_color"
@@ -54,12 +54,12 @@
             tools:ignore="TouchTargetSizeCheck"/>
 
         <EditText
-            android:id="@+id/descriptionInput"
+            android:id="@+id/detailsInput"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:height="48dp"
             android:maxWidth="220dp"
-            android:hint="@string/descriptionHint"
+            android:hint="@string/details_hint"
             android:imeOptions="actionDone"
             android:inputType="textCapSentences"
             android:textColorHint="@color/hint_color"
@@ -71,11 +71,11 @@
             tools:ignore="TouchTargetSizeCheck"/>
 
         <Button
-            android:id="@+id/showDescriptionInput"
+            android:id="@+id/showDetailsInput"
             android:layout_width="100dp"
             android:layout_height="60dp"
             android:background="@android:color/transparent"
-            android:drawableLeft="@drawable/description_icon"
+            android:drawableLeft="@drawable/details_icon"
             android:drawableTint="@color/peach_darkest"
             android:gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -97,7 +97,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/empty_task_hint"
-            android:textColor="@color/description_font"
+            android:textColor="@color/details_font"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/taskList" />

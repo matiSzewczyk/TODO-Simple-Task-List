@@ -20,13 +20,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/taskDescription"
+        android:id="@+id/taskDetails"
         android:layout_width="300dp"
         android:layout_height="match_parent"
         android:textSize="18sp"
         android:textStyle="italic"
         android:maxLength="70"
-        android:textColor="@color/description_font"
+        android:textColor="@color/details_font"
         android:gravity="center_vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/taskTitle"

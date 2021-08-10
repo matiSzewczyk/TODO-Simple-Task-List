@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/menu_edit_desc"
-        android:title="@string/menu_edit_desc" />
+        android:id="@+id/menu_edit_details"
+        android:title="@string/menu_edit_details" />
     <item
         android:id="@+id/menu_delete_task"
         android:title="@string/menu_delete_task" />

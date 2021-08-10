@@ -42,9 +42,9 @@ class TaskFragment : Fragment(R.layout.fragment_task), RecyclerViewInterface {
         taskList.layoutManager = LinearLayoutManager(parentFragment?.context)
 
         taskInput.visibility = View.INVISIBLE
-        showDescriptionInput.visibility = View.INVISIBLE
+        showDetailsInput.visibility = View.INVISIBLE
         showTaskInput.visibility = View.INVISIBLE
-        descriptionInput.visibility = View.INVISIBLE
+        detailsInput.visibility = View.INVISIBLE
 
         registerForContextMenu(taskList)
 
@@ -57,43 +57,43 @@ class TaskFragment : Fragment(R.layout.fragment_task), RecyclerViewInterface {
         addTask.setOnClickListener {
             addTask.visibility = View.INVISIBLE
             taskInput.visibility = View.VISIBLE
-            showDescriptionInput.visibility = View.VISIBLE
+            showDetailsInput.visibility = View.VISIBLE
             showSoftKeyboard(taskInput)
         }
 
         showTaskInput.setOnClickListener {
-            descriptionInput.visibility = View.INVISIBLE
-            showDescriptionInput.visibility = View.VISIBLE
+            detailsInput.visibility = View.INVISIBLE
+            showDetailsInput.visibility = View.VISIBLE
             showTaskInput.visibility = View.INVISIBLE
             taskInput.visibility = View.VISIBLE
         }
 
-        showDescriptionInput.setOnClickListener {
+        showDetailsInput.setOnClickListener {
             if (taskInput.text.isNotEmpty()) {
-                showDescriptionInput.visibility = View.INVISIBLE
+                showDetailsInput.visibility = View.INVISIBLE
                 showTaskInput.visibility = View.VISIBLE
                 taskInput.visibility = View.INVISIBLE
-                descriptionInput.visibility = View.VISIBLE
-                showSoftKeyboard(descriptionInput)
+                detailsInput.visibility = View.VISIBLE
+                showSoftKeyboard(detailsInput)
             } else {
                 Toast.makeText(context, "Please add a task first :)", Toast.LENGTH_SHORT).show()
             }
         }
 
-        descriptionInput.setOnEditorActionListener { _, actionId, _ ->
+        detailsInput.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 val taskTitle = taskInput.text.toString()
-                val taskDescription = descriptionInput.text.toString()
-                val task = Task(taskTitle, taskDescription,  false)
+                val taskDetails = detailsInput.text.toString()
+                val task = Task(taskTitle, taskDetails,  false)
                 todoAdapter.addTask(task, database)
                 taskInput.text.clear()
                 taskInput.clearFocus()
-                descriptionInput.text.clear()
+                detailsInput.text.clear()
                 addTask.visibility = View.VISIBLE
-                descriptionInput.visibility = View.INVISIBLE
+                detailsInput.visibility = View.INVISIBLE
                 taskInput.visibility = View.INVISIBLE
                 showTaskInput.visibility = View.INVISIBLE
-                hideSoftKeyboard(descriptionInput)
+                hideSoftKeyboard(detailsInput)
                 emptyTaskHint.visibility = View.INVISIBLE
                 return@setOnEditorActionListener true
             }
@@ -109,7 +109,7 @@ class TaskFragment : Fragment(R.layout.fragment_task), RecyclerViewInterface {
                     taskInput.text.clear()
                     addTask.visibility = View.VISIBLE
                     taskInput.visibility = View.INVISIBLE
-                    showDescriptionInput.visibility = View.INVISIBLE
+                    showDetailsInput.visibility = View.INVISIBLE
                     emptyTaskHint.visibility = View.INVISIBLE
                     // Force the soft keyboard to hide
                     hideSoftKeyboard(taskInput)
@@ -139,18 +139,18 @@ class TaskFragment : Fragment(R.layout.fragment_task), RecyclerViewInterface {
         menu.setOnMenuItemClickListener {
             val task = todoAdapter.todoList[index].task
             when (it?.itemId) {
-                R.id.menu_edit_desc -> {
-                    descriptionInput.visibility = View.VISIBLE
+                R.id.menu_edit_details -> {
+                    detailsInput.visibility = View.VISIBLE
                     addTask.visibility = View.INVISIBLE
-                    showSoftKeyboard(descriptionInput)
-                    descriptionInput.setOnEditorActionListener { _, _, _ ->
-                        val taskDescription = descriptionInput.text.toString()
-                        database.taskDao().changeDescription(task, taskDescription)
-                        descriptionInput.text.clear()
-                        hideSoftKeyboard(descriptionInput)
-                        descriptionInput.visibility = View.INVISIBLE
+                    showSoftKeyboard(detailsInput)
+                    detailsInput.setOnEditorActionListener { _, _, _ ->
+                        val taskDetails = detailsInput.text.toString()
+                        database.taskDao().changeDetails(task, taskDetails)
+                        detailsInput.text.clear()
+                        hideSoftKeyboard(detailsInput)
+                        detailsInput.visibility = View.INVISIBLE
                         addTask.visibility = View.VISIBLE
-                        todoAdapter.todoList[index] = Task(task, taskDescription)
+                        todoAdapter.todoList[index] = Task(task, taskDetails)
                         todoAdapter.notifyItemChanged(index)
                         false
                     }
@@ -175,28 +175,28 @@ class TaskFragment : Fragment(R.layout.fragment_task), RecyclerViewInterface {
 
     override fun myClickListener(position: Int, view: View?) {
         val title = view?.findViewById<TextView>(R.id.taskTitle)
-        val description = view?.findViewById<TextView>(R.id.taskDescription)
+        val details = view?.findViewById<TextView>(R.id.taskDetails)
 
-            if (!todoAdapter.todoList[position].description.isNullOrEmpty()) {
-                if (description?.text == "") {
+            if (!todoAdapter.todoList[position].details.isNullOrEmpty()) {
+                if (details?.text == "") {
                     title?.text = ""
-                    description.text = todoAdapter.todoList[position].description
+                    details.text = todoAdapter.todoList[position].details
                 } else {
                     title?.text = todoAdapter.todoList[position].task
-                    description?.text = ""
+                    details?.text = ""
                 }
             } else {
-                Toast.makeText(context, "No description for task.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "No details for task.", Toast.LENGTH_SHORT).show()
             }
     }
 
     override fun myCheckedChangeListener(position: Int, isChecked: Boolean, view: View) {
-        val description = view.findViewById<TextView>(R.id.taskDescription)
+        val details = view.findViewById<TextView>(R.id.taskDetails)
         val title = view.findViewById<TextView>(R.id.taskTitle)
 
         if (isChecked) {
-            description?.text = todoAdapter.todoList[position].description
-            completedAdapter.addToCompleted(title, description)
+            details?.text = todoAdapter.todoList[position].details
+            completedAdapter.addToCompleted(title, details)
             todoAdapter.todoList.removeAt(position)
             todoAdapter.notifyItemRemoved(position)
         }
