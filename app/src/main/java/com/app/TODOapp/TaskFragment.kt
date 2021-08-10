@@ -186,7 +186,7 @@ class TaskFragment : Fragment(R.layout.fragment_task), RecyclerViewInterface {
                     details?.text = ""
                 }
             } else {
-                Toast.makeText(context, "No details for task.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "No details for this task.", Toast.LENGTH_SHORT).show()
             }
     }
 
