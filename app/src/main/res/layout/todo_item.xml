@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="@drawable/custom_button"
     android:padding="16dp"
+    android:id="@+id/todo_item_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -19,8 +20,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toEndOf="@+id/taskCheckBox"
+        android:layout_below="@id/taskTitle"
         android:textSize="18sp"
         android:textStyle="italic"
+        android:visibility="gone"
         android:textColor="@color/details_font"
         android:gravity="center_vertical"/>
 

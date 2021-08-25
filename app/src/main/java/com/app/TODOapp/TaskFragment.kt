@@ -174,15 +174,14 @@ class TaskFragment : Fragment(R.layout.fragment_task), RecyclerViewInterface {
     }
 
     override fun myClickListener(position: Int, view: View?) {
-        val title = view?.findViewById<TextView>(R.id.taskTitle)
         val details = view?.findViewById<TextView>(R.id.taskDetails)
 
             if (!todoAdapter.todoList[position].details.isNullOrEmpty()) {
                 if (details?.text == "") {
-                    title?.text = ""
                     details.text = todoAdapter.todoList[position].details
+                    details.visibility = View.VISIBLE
                 } else {
-                    title?.text = todoAdapter.todoList[position].task
+                    details?.visibility = View.GONE
                     details?.text = ""
                 }
             } else {
