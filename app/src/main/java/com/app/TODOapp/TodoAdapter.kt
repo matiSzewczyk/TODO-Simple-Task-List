@@ -43,6 +43,7 @@ class TodoAdapter(
     override fun onBindViewHolder(holder: TodoViewHolder, position: Int) {
         holder.itemView.apply {
             taskTitle.text = todoList[position].task
+            taskDetails.text = todoList[position].details
             taskCheckBox.isChecked = todoList[position].checked
         }
     }

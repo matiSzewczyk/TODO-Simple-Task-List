@@ -177,12 +177,10 @@ class TaskFragment : Fragment(R.layout.fragment_task), RecyclerViewInterface {
         val details = view?.findViewById<TextView>(R.id.taskDetails)
 
             if (!todoAdapter.todoList[position].details.isNullOrEmpty()) {
-                if (details?.text == "") {
-                    details.text = todoAdapter.todoList[position].details
+                if (details!!.visibility == View.GONE) {
                     details.visibility = View.VISIBLE
                 } else {
-                    details?.visibility = View.GONE
-                    details?.text = ""
+                    details.visibility = View.GONE
                 }
             } else {
                 Toast.makeText(context, "No details for this task.", Toast.LENGTH_SHORT).show()
