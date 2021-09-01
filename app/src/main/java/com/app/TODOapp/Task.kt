@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "tasks")
 data class Task(
-    @ColumnInfo(name = "task") val task: String,
+    @ColumnInfo(name = "task") var task: String,
     @ColumnInfo(name = "details") var details: String?,
     @ColumnInfo(name = "checked") var checked: Boolean = false
 ) {

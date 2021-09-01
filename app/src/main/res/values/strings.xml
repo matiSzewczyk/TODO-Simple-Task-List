@@ -14,6 +14,7 @@
     <!-- Button -->
     <string name="add_button_plus">+</string>
     <!-- Menu text -->
+    <string name="menu_edit_title">Edit Title</string>
     <string name="menu_edit_details">Edit Details</string>
     <string name="menu_header">Options</string>
     <string name="menu_delete_task">Delete Task</string>

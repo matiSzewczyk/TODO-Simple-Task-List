@@ -139,27 +139,16 @@ class TaskFragment : Fragment(R.layout.fragment_task), RecyclerViewInterface {
         menu.setOnMenuItemClickListener {
             val task = todoAdapter.todoList[index].task
             when (it?.itemId) {
+                R.id.menu_edit_title -> {
+                    editTitle(task, index)
+                    true
+                }
                 R.id.menu_edit_details -> {
-                    detailsInput.visibility = View.VISIBLE
-                    addTask.visibility = View.INVISIBLE
-                    showSoftKeyboard(detailsInput)
-                    detailsInput.setOnEditorActionListener { _, _, _ ->
-                        val taskDetails = detailsInput.text.toString()
-                        database.taskDao().changeDetails(task, taskDetails)
-                        detailsInput.text.clear()
-                        hideSoftKeyboard(detailsInput)
-                        detailsInput.visibility = View.INVISIBLE
-                        addTask.visibility = View.VISIBLE
-                        todoAdapter.todoList[index] = Task(task, taskDetails)
-                        todoAdapter.notifyItemChanged(index)
-                        false
-                    }
+                    editDetails(task, index)
                     true
                 }
                 R.id.menu_delete_task -> {
-                    database.taskDao().deleteTask(task)
-                    todoAdapter.todoList.removeAt(index)
-                    todoAdapter.notifyItemRemoved(index)
+                    deleteTask(task, index)
                     true
                 }
                 else -> false
@@ -197,6 +186,47 @@ class TaskFragment : Fragment(R.layout.fragment_task), RecyclerViewInterface {
             todoAdapter.todoList.removeAt(position)
             todoAdapter.notifyItemRemoved(position)
         }
+    }
+
+    private fun editTitle(task: String, index: Int) {
+        taskInput.visibility = View.VISIBLE
+        addTask.visibility = View.INVISIBLE
+        showSoftKeyboard(detailsInput)
+        taskInput.setText(database.taskDao().getTaskText(task))
+        taskInput.setOnEditorActionListener { _, _, _ ->
+            val taskTitle = taskInput.text.toString()
+            database.taskDao().changeTitle(task, taskTitle)
+            taskInput.text.clear()
+            hideSoftKeyboard(taskInput)
+            taskInput.visibility = View.INVISIBLE
+            addTask.visibility = View.VISIBLE
+            todoAdapter.todoList[index].task = taskTitle
+            todoAdapter.notifyItemChanged(index)
+            true
+        }
+    }
+    private fun editDetails(task: String, index: Int) {
+        detailsInput.visibility = View.VISIBLE
+        addTask.visibility = View.INVISIBLE
+        detailsInput.setText(database.taskDao().getDetailsText(task))
+        showSoftKeyboard(detailsInput)
+        detailsInput.setOnEditorActionListener { _, _, _ ->
+            val taskDetails = detailsInput.text.toString()
+            database.taskDao().changeDetails(task, taskDetails)
+            detailsInput.text.clear()
+            hideSoftKeyboard(detailsInput)
+            detailsInput.visibility = View.INVISIBLE
+            addTask.visibility = View.VISIBLE
+            todoAdapter.todoList[index] = Task(task, taskDetails)
+            todoAdapter.notifyItemChanged(index)
+            false
+        }
+    }
+
+    private fun deleteTask(task: String, index: Int) {
+        database.taskDao().deleteTask(task)
+        todoAdapter.todoList.removeAt(index)
+        todoAdapter.notifyItemRemoved(index)
     }
 }
 

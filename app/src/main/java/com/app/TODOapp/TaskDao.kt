@@ -20,4 +20,13 @@ interface TaskDao {
 
     @Query("UPDATE tasks SET details = :details WHERE task = :task")
     fun changeDetails(task: String, details: String)
+
+    @Query("UPDATE tasks SET task = :task WHERE task = :prevTask")
+    fun changeTitle(prevTask: String, task: String)
+
+    @Query("SELECT task FROM tasks WHERE task = :task")
+    fun getTaskText(task: String): String
+
+    @Query("SELECT details FROM tasks WHERE task = :task")
+    fun getDetailsText(task: String): String
 }
