@@ -38,9 +38,8 @@
 
         <EditText
             android:id="@+id/taskInput"
-            android:layout_width="wrap_content"
+            android:layout_width="220dp"
             android:layout_height="wrap_content"
-            android:maxWidth="220dp"
             android:height="48dp"
             android:imeOptions="actionDone"
             android:inputType="textCapSentences"
@@ -54,10 +53,9 @@
 
         <EditText
             android:id="@+id/detailsInput"
-            android:layout_width="wrap_content"
+            android:layout_width="220dp"
             android:layout_height="wrap_content"
             android:height="48dp"
-            android:maxWidth="220dp"
             android:hint="@string/details_hint"
             android:imeOptions="actionDone"
             android:inputType="textCapSentences"
@@ -74,7 +72,7 @@
             android:layout_width="100dp"
             android:layout_height="60dp"
             android:background="@android:color/transparent"
-            android:drawableLeft="@drawable/details_icon"
+            android:drawableRight="@drawable/details_icon"
             android:drawableTint="@color/theme_darkest"
             android:gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
