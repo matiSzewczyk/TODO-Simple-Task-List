@@ -11,8 +11,8 @@ android {
         applicationId "com.app.TODOapp"
         minSdk 21
         targetSdk 31
-        versionCode 12
-        versionName "1.5"
+        versionCode 13
+        versionName "1.55"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
