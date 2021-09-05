@@ -11,7 +11,7 @@
     <color name="theme_darkest">#1b877d</color>
     <color name="theme_darker">#28a69a</color>
     <color name="theme_lighter">#31b5a8</color>
-    <color name="et_color_lighter">#ffffff</color>
+    <color name="et_color_lighter">#d9fffc</color>
     <color name="et_color_darker">#bffff9</color>
     <color name="hint_color">#3fd4c5</color>
     <color name="details_font">#dbdbdb</color>
