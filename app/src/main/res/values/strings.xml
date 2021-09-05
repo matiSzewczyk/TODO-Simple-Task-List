@@ -8,7 +8,6 @@
     <string name="settings_selected">Delete selected</string>
     <string name="settings_move_back">Move selected to task list</string>
     <!-- Hints -->
-    <string name="task_hint">What\'s next? ;)</string>
     <string name="details_hint">Details</string>
     <string name="empty_task_hint">Nothing here yet, let\'s get started!</string>
     <!-- Button -->

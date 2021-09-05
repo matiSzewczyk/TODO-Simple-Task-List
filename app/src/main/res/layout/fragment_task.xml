@@ -42,7 +42,6 @@
             android:layout_height="wrap_content"
             android:maxWidth="220dp"
             android:height="48dp"
-            android:hint="@string/task_hint"
             android:imeOptions="actionDone"
             android:inputType="textCapSentences"
             android:textColorHint="@color/hint_color"
