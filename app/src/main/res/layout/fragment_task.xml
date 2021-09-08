@@ -67,6 +67,36 @@
             app:layout_constraintStart_toStartOf="parent"
             tools:ignore="TouchTargetSizeCheck"/>
 
+        <EditText
+            android:id="@+id/editTitleInput"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:height="48dp"
+            android:imeOptions="actionDone"
+            android:inputType="textCapSentences"
+            android:textColorHint="@color/hint_color"
+            android:background="@drawable/custom_edit_text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="TouchTargetSizeCheck"/>
+
+        <EditText
+            android:id="@+id/editDetailsInput"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:height="48dp"
+            android:imeOptions="actionDone"
+            android:inputType="textCapSentences"
+            android:textColorHint="@color/hint_color"
+            android:background="@drawable/custom_edit_text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="TouchTargetSizeCheck"/>
+
         <Button
             android:id="@+id/showDetailsInput"
             android:layout_width="100dp"
